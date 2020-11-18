@@ -1,0 +1,53 @@
+
+POST  http://localhost:3000/api/login HTTP/1.1
+content-type: application/json
+
+{    
+    "user": "1",
+    "password" : "fro"
+}
+
+
+### 
+
+GET  http://localhost:3000/api/users HTTP/1.1
+content-type: application/json
+
+
+### 
+
+
+POST  http://localhost:3000/api/register HTTP/1.1
+content-type: application/json
+
+{
+   "name":"José",
+   "lastname1":"Sanchez",
+   "lastname2":"Pérez",
+   "age":21,
+   "sex":"M",
+   "country":"España",
+   "lang_desired":[
+      {
+         "name":"Francés"
+      }
+   ],
+   "lang_teach":[
+      {
+         "name":"Español"
+      }
+   ],
+   "hobbies":[
+      {
+         "name":"Pintar"
+      }
+   ],
+   "contact":[
+      {
+         "name":"”Whatsapp”"
+      }
+   ]
+}
+
+
+### 
