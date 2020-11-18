@@ -3,8 +3,8 @@ POST  http://localhost:3000/api/login HTTP/1.1
 content-type: application/json
 
 {    
-    "user": "1",
-    "password" : "fro"
+    "user": "KMG",
+    "password" : "123"
 }
 
 
@@ -21,15 +21,15 @@ POST  http://localhost:3000/api/register HTTP/1.1
 content-type: application/json
 
 {
-   "name":"José",
+   "name":"Ana",
    "lastname1":"Sanchez",
    "lastname2":"Pérez",
-   "age":21,
-   "sex":"M",
+   "age":15,
+   "sex":"F",
    "country":"España",
    "lang_desired":[
       {
-         "name":"Francés"
+         "name":"Inglés"
       }
    ],
    "lang_teach":[
@@ -39,12 +39,12 @@ content-type: application/json
    ],
    "hobbies":[
       {
-         "name":"Pintar"
+         "name":"Bailar"
       }
    ],
    "contact":[
       {
-         "name":"”Whatsapp”"
+         "name":"Whatsapp"
       }
    ]
 }

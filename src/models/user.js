@@ -18,4 +18,4 @@ const User = Schema({
 });
 
 //First parameter corresponds to collection
-module.exports = mongoose.model('Model', User, 'test');
+module.exports = mongoose.model('Model', User, 'users');
