@@ -14,5 +14,7 @@ module.exports = app => {
     // Handles hobby deletion
     app.delete("/api/deleteHobby", user.deleteHobby);
     //Retrieves all users by language desired - Report 1
-    app.get("/api/users", user.getUsersByLangDesired);
+    app.post("/api/reports/1", user.getUsersByLangDesired);
+    //Retrieves all users by language desired who teach a desired language - Report 2
+    app.post("/api/reports/2", user.getUsersByLangDesiredAndTeach);
 };

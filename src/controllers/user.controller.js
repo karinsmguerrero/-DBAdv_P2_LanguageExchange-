@@ -87,7 +87,15 @@ module.exports.deleteHobby = async (req, res) => {
 
 
 module.exports.getUsersByLangDesired = async (req, res) => {
-    await user.find({"lang_desired.name" :{ $in: ["Chino", "Francés"] } }, function (err, result) {
+    const lang_desired = req.body.lang_desired; 
+
+    var desired = [];
+    //Extracts names of languages
+    lang_desired.forEach(lang => {
+        desired.push(lang.name);
+    });
+
+    await user.find({ "lang_desired.name": { $in: desired} }, function (err, result) {
         if (err) {
             res.send(err);
         } else {
@@ -96,3 +104,34 @@ module.exports.getUsersByLangDesired = async (req, res) => {
     });
     return;
 };
+
+module.exports.getUsersByLangDesiredAndTeach = async (req, res) => {
+    const lang_desired = req.body.lang_desired; 
+    const lang_Teach = req.body.lang_teach;
+
+    var desired = [];
+    lang_desired.forEach(lang => {
+        desired.push(lang.name);
+    });
+
+    var teach = [];
+    lang_Teach.forEach(lang => {
+        teach.push(lang.name);
+    });
+
+    console.log(teach);
+
+    await user.find({
+        $and: [{ "lang_desired.name": { $in: desired } },
+        { "lang_teach.name": { $in: teach } }]
+    }, function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(result);
+        }
+    });
+    return;
+};
+
+//db.users.find({ $and : [{"lang_desired.name" :{ $in: ["Inglés", "Español"] } }, {"lang_teach.name" : {$in: ["Frances", "Alemán"]} } ]})  

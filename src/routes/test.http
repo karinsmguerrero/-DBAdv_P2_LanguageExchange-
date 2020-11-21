@@ -21,22 +21,28 @@ POST  http://localhost:3000/api/register HTTP/1.1
 content-type: application/json
 
 {
-   "user": "SSM",
+   "user": "KSM",
     "password" : "123",
-   "name":"Sarah",
-   "lastname1":"Scheneider",
-   "lastname2":"Muls",
-   "age":40,
-   "sex":"F",
-   "country":"Alemania",
+   "name":"Kirs",
+   "lastname1":"Muls",
+   "lastname2":"Firscher",
+   "age":32,
+   "sex":"M",
+   "country":"Austria",
    "lang_desired":[
       {
          "name":"Inglés"
+      },
+       {
+         "name":"Francés"
       }
    ],
    "lang_teach":[
       {
          "name":"Alemán"
+      },
+      {
+         "name":"Ruso"
       }
    ],
    "contact":[
@@ -65,7 +71,7 @@ PUT  http://localhost:3000/api/addHobby HTTP/1.1
 content-type: application/json
 
 {    
-    "user": "ATP",
+    "user": "ASPT",
     "name" : "Correr"
 }
 
@@ -79,6 +85,56 @@ content-type: application/json
 {    
     "user": "ATP",
     "name" : "Correr"
+}
+
+
+### 
+
+
+POST  http://localhost:3000/api/reports/1 HTTP/1.1
+content-type: application/json
+
+{    
+   "lang_desired":[
+      {
+         "name": "Alemán",
+         "level" : "Principiante"
+      },
+       {
+         "name": "Inglés",
+         "level" : "Intermedio"
+      }
+   ]
+}
+
+
+### 
+
+
+POST  http://localhost:3000/api/reports/2 HTTP/1.1
+content-type: application/json
+
+{    
+   "lang_desired":[
+      {
+         "name": "Alemán",
+         "level" : "Principiante"
+      },
+       {
+         "name": "Inglés",
+         "level" : "Intermedio"
+      }
+   ],
+   "lang_teach":[
+      {
+         "name":"Español",
+         "level" : "Intermedio"
+      },
+      {
+         "name":"Inglés",
+         "level" : "Avanzado"
+      }
+   ]
 }
 
 
