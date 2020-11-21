@@ -3,51 +3,260 @@ POST  http://localhost:3000/api/login HTTP/1.1
 content-type: application/json
 
 {    
-    "user": "1",
-    "password" : "fro"
+    "user": "VM",
+    "password" : "123"
 }
 
 
 ### 
-
-GET  http://localhost:3000/api/users HTTP/1.1
-content-type: application/json
-
-
-### 
-
 
 POST  http://localhost:3000/api/register HTTP/1.1
 content-type: application/json
 
 {
-   "name":"José",
-   "lastname1":"Sanchez",
-   "lastname2":"Pérez",
-   "age":21,
-   "sex":"M",
-   "country":"España",
+   "user": "KSMT",
+    "password" : "123",
+   "name":"Kirsten",
+   "lastname1":"Muller",
+   "lastname2":"Firscher",
+   "age":52,
+   "sex":"F",
+   "country":"Austria",
    "lang_desired":[
       {
-         "name":"Francés"
+         "name":"Inglés",
+         "level" : "Principiante"
+      },
+       {
+         "name":"Español",
+         "level" : "Principiante"
       }
    ],
    "lang_teach":[
       {
-         "name":"Español"
-      }
-   ],
-   "hobbies":[
+         "name":"Alemán",
+         "level" : "Avanzado"
+      },
       {
-         "name":"Pintar"
+         "name":"Francés",
+         "level" : "Intermedio"
       }
    ],
    "contact":[
       {
-         "name":"”Whatsapp”"
+         "name":"Skype"
+      },
+       {
+         "name":"Whatsapp"
       }
    ]
 }
+
+
+### 
+
+
+POST  http://localhost:3000/api/exists HTTP/1.1
+content-type: application/json
+
+{    
+    "user": "VMG"
+}
+
+
+### 
+
+
+PUT  http://localhost:3000/api/addHobby HTTP/1.1
+content-type: application/json
+
+{    
+    "user": "ASPT",
+    "name" : "Correr"
+}
+
+
+### 
+
+
+DELETE   http://localhost:3000/api/deleteHobby HTTP/1.1
+content-type: application/json
+
+{    
+    "user": "ATP",
+    "name" : "Correr"
+}
+
+
+### 
+
+
+POST  http://localhost:3000/api/reports/1 HTTP/1.1
+content-type: application/json
+
+{    
+   "lang_desired":[
+      {
+         "name": "Alemán",
+         "level" : "Principiante"
+      },
+       {
+         "name": "Inglés",
+         "level" : "Intermedio"
+      }
+   ]
+}
+
+
+### 
+
+
+POST  http://localhost:3000/api/reports/2 HTTP/1.1
+content-type: application/json
+
+{    
+   "lang_desired":[
+      {
+         "name": "Alemán",
+         "level" : "Principiante"
+      },
+       {
+         "name": "Inglés",
+         "level" : "Intermedio"
+      }
+   ],
+   "lang_teach":[
+      {
+         "name":"Español",
+         "level" : "Intermedio"
+      },
+      {
+         "name":"Inglés",
+         "level" : "Avanzado"
+      }
+   ]
+}
+
+
+### 
+
+
+POST  http://localhost:3000/api/reports/3 HTTP/1.1
+content-type: application/json
+
+{    
+   "lang_desired":[
+      {
+         "name": "Alemán",
+         "level" : "Principiante"
+      },
+       {
+         "name": "Inglés",
+         "level" : "Intermedio"
+      }
+   ],
+   "lang_teach":[
+      {
+         "name":"Español",
+         "level" : "Intermedio"
+      }
+   ],
+   "countries":[
+      {
+         "name":"España"
+      },
+       {
+         "name":"Costa Rica"
+      }
+   ]
+}
+
+
+### 
+
+
+POST  http://localhost:3000/api/reports/4 HTTP/1.1
+content-type: application/json
+
+{    
+   "lang_desired":[
+      {
+         "name": "Alemán",
+         "level" : "Principiante"
+      },
+       {
+         "name": "Inglés",
+         "level" : "Intermedio"
+      }
+   ],
+   "lang_teach":[
+      {
+         "name":"Español",
+         "level" : "Intermedio"
+      }
+   ],
+   "countries":[
+      {
+         "name":"España"
+      },
+       {
+         "name":"Costa Rica"
+      }
+   ],
+   "age": [12,15]
+}
+
+
+### 
+
+
+PUT  http://localhost:3000/api/addContact HTTP/1.1
+content-type: application/json
+
+{    
+    "user": "ASPT",
+    "name" : "Skype"
+}
+
+
+### 
+
+
+DELETE   http://localhost:3000/api/deleteContact HTTP/1.1
+content-type: application/json
+
+{    
+    "user": "ASPT",
+    "name" : "Skype"
+}
+
+
+### 
+
+
+GET  http://localhost:3000/api/reports/5 HTTP/1.1
+content-type: application/json
+
+
+### 
+
+
+GET  http://localhost:3000/api/reports/6 HTTP/1.1
+content-type: application/json
+
+
+### 
+
+
+GET  http://localhost:3000/api/reports/7 HTTP/1.1
+content-type: application/json
+
+
+### 
+
+
+GET  http://localhost:3000/api/reports/8 HTTP/1.1
+content-type: application/json
 
 
 ### 
