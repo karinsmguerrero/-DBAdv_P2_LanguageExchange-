@@ -3,7 +3,7 @@ POST  http://localhost:3000/api/login HTTP/1.1
 content-type: application/json
 
 {    
-    "user": "KMG",
+    "user": "VM",
     "password" : "123"
 }
 
@@ -21,12 +21,14 @@ POST  http://localhost:3000/api/register HTTP/1.1
 content-type: application/json
 
 {
-   "name":"Ana",
-   "lastname1":"Sanchez",
-   "lastname2":"Pérez",
-   "age":15,
+   "user": "SSM",
+    "password" : "123",
+   "name":"Sarah",
+   "lastname1":"Scheneider",
+   "lastname2":"Muls",
+   "age":40,
    "sex":"F",
-   "country":"España",
+   "country":"Alemania",
    "lang_desired":[
       {
          "name":"Inglés"
@@ -34,19 +36,49 @@ content-type: application/json
    ],
    "lang_teach":[
       {
-         "name":"Español"
-      }
-   ],
-   "hobbies":[
-      {
-         "name":"Bailar"
+         "name":"Alemán"
       }
    ],
    "contact":[
       {
-         "name":"Whatsapp"
+         "name":"Skype"
       }
    ]
+}
+
+
+### 
+
+
+POST  http://localhost:3000/api/exists HTTP/1.1
+content-type: application/json
+
+{    
+    "user": "VMG"
+}
+
+
+### 
+
+
+PUT  http://localhost:3000/api/addHobby HTTP/1.1
+content-type: application/json
+
+{    
+    "user": "ATP",
+    "name" : "Correr"
+}
+
+
+### 
+
+
+DELETE   http://localhost:3000/api/deleteHobby HTTP/1.1
+content-type: application/json
+
+{    
+    "user": "ATP",
+    "name" : "Correr"
 }
 
 

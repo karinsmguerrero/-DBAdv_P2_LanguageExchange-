@@ -2,44 +2,92 @@
 var user = require("../models/user.js");
 
 module.exports.checkCredentials = async (req, res) => {
-    console.log("checking");
     const rs = await user.aggregate([
         {
             $project:
             {
-                _id : 0,
-                result: { $and: [{ $eq: [ "$user", req.body.user ] },{ $eq: [ "$password", req.body.password ] }] }
+                _id: 0,
+                result: { $and: [{ $eq: ["$user", req.body.user] }, { $eq: ["$password", req.body.password] }] }
             }
         },
         {
             $match: {
-                result : true
+                result: true
             }
         }
-        
+
     ]);
-    if(rs.length == 0)
-        res.send([{ result : 2}]);
+    if (rs.length == 0)
+        res.send({ result: 2 });
     else
-        res.send( rs);
-    //res.send({ result: 1 });
+        res.send({ result: 1 });
     return;
 };
 
 module.exports.register = async (req, res) => {
-    try {
+    var ans;
+    await user.find({ user: { $exists: true, $eq: req.body.user } }, { _id: 0, user: 1 }, function (err, result) {
+        console.log(ans)
+        if (err) {
+            ans = err;
+        } else {
+            ans = result;
+        }
+    });
+    if (ans != undefined && ans.length == 0) {
         await user.create(req.body);
         res.send({ result: 1 });
         return;
     }
-    catch {
+    else {
         res.send({ result: 2 });
         return;
     }
 };
 
 module.exports.getUsers = async (req, res) => {
-    await user.find({}, { name: 1, lastname1: 1, lastname2: 1, age: 1 }, function (err, result) {
+    await user.find({}, function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(result);
+        }
+    });
+    return;
+};
+
+module.exports.addHobby = async (req, res) => {
+    const ans = await user.updateOne(
+        { user: req.body.user },
+        { $push: { hobbies: { name: req.body.name } } }
+    )
+    if (ans.nModified >= 1) {
+        res.send({ result: 1 });
+    }
+    else {
+        res.send({ result: 2 });
+    }
+}
+
+module.exports.deleteHobby = async (req, res) => {
+    const ans = await user.update({ user: req.body.user }, {
+        $pull: {
+            hobbies: {
+                name: req.body.name
+            }
+        }
+    }, { multi: true })
+    if (ans.nModified >= 1) {
+        res.send({ result: 1 });
+    }
+    else {
+        res.send({ result: 2 });
+    }
+}
+
+
+module.exports.getUsersByLangDesired = async (req, res) => {
+    await user.find({"lang_desired.name" :{ $in: ["Chino", "Francés"] } }, function (err, result) {
         if (err) {
             res.send(err);
         } else {
