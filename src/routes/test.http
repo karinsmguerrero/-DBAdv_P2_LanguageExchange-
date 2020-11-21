@@ -10,44 +10,44 @@ content-type: application/json
 
 ### 
 
-GET  http://localhost:3000/api/users HTTP/1.1
-content-type: application/json
-
-
-### 
-
-
 POST  http://localhost:3000/api/register HTTP/1.1
 content-type: application/json
 
 {
-   "user": "KSM",
+   "user": "KSMT",
     "password" : "123",
-   "name":"Kirs",
-   "lastname1":"Muls",
+   "name":"Kirsten",
+   "lastname1":"Muller",
    "lastname2":"Firscher",
-   "age":32,
-   "sex":"M",
+   "age":52,
+   "sex":"F",
    "country":"Austria",
    "lang_desired":[
       {
-         "name":"Inglés"
+         "name":"Inglés",
+         "level" : "Principiante"
       },
        {
-         "name":"Francés"
+         "name":"Español",
+         "level" : "Principiante"
       }
    ],
    "lang_teach":[
       {
-         "name":"Alemán"
+         "name":"Alemán",
+         "level" : "Avanzado"
       },
       {
-         "name":"Ruso"
+         "name":"Francés",
+         "level" : "Intermedio"
       }
    ],
    "contact":[
       {
          "name":"Skype"
+      },
+       {
+         "name":"Whatsapp"
       }
    ]
 }
@@ -136,6 +136,127 @@ content-type: application/json
       }
    ]
 }
+
+
+### 
+
+
+POST  http://localhost:3000/api/reports/3 HTTP/1.1
+content-type: application/json
+
+{    
+   "lang_desired":[
+      {
+         "name": "Alemán",
+         "level" : "Principiante"
+      },
+       {
+         "name": "Inglés",
+         "level" : "Intermedio"
+      }
+   ],
+   "lang_teach":[
+      {
+         "name":"Español",
+         "level" : "Intermedio"
+      }
+   ],
+   "countries":[
+      {
+         "name":"España"
+      },
+       {
+         "name":"Costa Rica"
+      }
+   ]
+}
+
+
+### 
+
+
+POST  http://localhost:3000/api/reports/4 HTTP/1.1
+content-type: application/json
+
+{    
+   "lang_desired":[
+      {
+         "name": "Alemán",
+         "level" : "Principiante"
+      },
+       {
+         "name": "Inglés",
+         "level" : "Intermedio"
+      }
+   ],
+   "lang_teach":[
+      {
+         "name":"Español",
+         "level" : "Intermedio"
+      }
+   ],
+   "countries":[
+      {
+         "name":"España"
+      },
+       {
+         "name":"Costa Rica"
+      }
+   ],
+   "age": [12,15]
+}
+
+
+### 
+
+
+PUT  http://localhost:3000/api/addContact HTTP/1.1
+content-type: application/json
+
+{    
+    "user": "ASPT",
+    "name" : "Skype"
+}
+
+
+### 
+
+
+DELETE   http://localhost:3000/api/deleteContact HTTP/1.1
+content-type: application/json
+
+{    
+    "user": "ASPT",
+    "name" : "Skype"
+}
+
+
+### 
+
+
+GET  http://localhost:3000/api/reports/5 HTTP/1.1
+content-type: application/json
+
+
+### 
+
+
+GET  http://localhost:3000/api/reports/6 HTTP/1.1
+content-type: application/json
+
+
+### 
+
+
+GET  http://localhost:3000/api/reports/7 HTTP/1.1
+content-type: application/json
+
+
+### 
+
+
+GET  http://localhost:3000/api/reports/8 HTTP/1.1
+content-type: application/json
 
 
 ### 
