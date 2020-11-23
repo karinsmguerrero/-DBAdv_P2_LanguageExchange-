@@ -4,7 +4,7 @@ module.exports = app => {
 
     //---- User ------
     // Handles credential checking
-    app.post("/api/login", user.checkCredentials);
+    app.post("/api/login", user.checkLogin);
     //Handles user registration
     app.post("/api/register", user.register);
     // Handles hobby adding
