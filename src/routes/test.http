@@ -45,6 +45,7 @@ content-type: application/json
    "contact":[
       {
          "name":"Skype"
+         "value":""
       },
        {
          "name":"Whatsapp"

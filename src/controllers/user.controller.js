@@ -26,32 +26,35 @@ module.exports.checkCredentials = async (req, res) => {
 
 module.exports.checkLogin = async (req, res) => {
     console.log("checking");
-    const rs = await user.find({user: req.body.user, password:req.body.password});
-    if(rs.length == 0)
-        res.send([{ result : 2}]);
-    else
+    const rs = await user.find({ user: req.body.user, password: req.body.password });
+    if (rs.length == 0)
+        res.send([{ result: 2 }]);
+    else {
         //res.send( rs);
         console.log(rs);
         res.send(rs);
+    }
     return;
 };
 
 module.exports.getUserInfo = async (req, res) => {
     console.log("checking");
-    const rs = await user.find({user: req.body.user});
-    if(rs.length == 0)
-        res.send([{ result : 2}]);
-    else
+    const rs = await user.find({ user: req.body.user });
+    if (rs.length == 0)
+        res.send([{ result: 2 }]);
+    else {
         //res.send( rs);
         console.log(rs);
         res.send(rs);
+    }
     return;
 };
 
 module.exports.register = async (req, res) => {
     var ans;
+    console.log(req.body);
     await user.find({ user: { $exists: true, $eq: req.body.user } }, { _id: 0, user: 1 }, function (err, result) {
-        console.log(ans)
+        console.log(ans);
         if (err) {
             ans = err;
         } else {
@@ -59,6 +62,7 @@ module.exports.register = async (req, res) => {
         }
     });
     if (ans != undefined && ans.length == 0) {
+        console.log(req.body);
         await user.create(req.body);
         res.send({ result: 1 });
         return;

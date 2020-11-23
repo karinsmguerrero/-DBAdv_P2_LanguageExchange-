@@ -3,7 +3,7 @@ import { LoginService } from "src/app/Services/login.service";
 import { Person } from "src/app/Models/person.model";
 import { ToastrService } from 'ngx-toastr';
 import { Country } from "src/app/Models/country";
-import { FormBuilder, FormGroup, Validators,FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 
@@ -17,21 +17,21 @@ export class RegisterComponent implements OnInit {
   loading = false;
   submitted = false;
   person: Person;
-  countries: Country[] =[];
-  levels: string[]=["Principiante","Intermedio","Avanzado"];
-  sexo: string[]=["Femenino","Masculino","No decir"];
+  countries: Country[] = [];
+  levels: string[] = ["Principiante", "Intermedio", "Avanzado"];
+  sexo: string[] = ["Femenino", "Masculino", "No decir"];
   keyword = "name";
-  selectedCountry: Country={
-    name : "seleccione un pais"
+  selectedCountry: Country = {
+    name: "seleccione un pais"
   }
-  
-  constructor( 
+
+  constructor(
     private toastr: ToastrService,
-    private logService : LoginService,
+    private logService: LoginService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.logService.getCountries().then(res => this.countries = res);
@@ -48,20 +48,20 @@ export class RegisterComponent implements OnInit {
       "lang_teach": this.formBuilder.array([this.initTask2()]),
       "hobbies": this.formBuilder.array([this.initTask3()]),
       "contact": this.formBuilder.array([this.initTask4()])
-      
-  });
+
+    });
   }
   //////////////////////////////////////////
   initTask() {
     return this.formBuilder.group({
-        "name": ['', Validators.required],
-        "level": ['', Validators.required]
+      "name": ['', Validators.required],
+      "level": ['', Validators.required]
     });
-  } 
-   subtaskControl () {
+  }
+  subtaskControl() {
     return this.form.get('lang_desired') as FormArray;
   }
-  
+
   addLink() {
     this.subtaskControl().push(this.initTask());
   }
@@ -71,14 +71,14 @@ export class RegisterComponent implements OnInit {
   //////////////////////////////////////////////////////////////
   initTask2() {
     return this.formBuilder.group({
-        "name": ['', Validators.required],
-        "level": ['', Validators.required]
+      "name": ['', Validators.required],
+      "level": ['', Validators.required]
     });
-  } 
-   subtaskControl2() {
+  }
+  subtaskControl2() {
     return this.form.get('lang_teach') as FormArray;
   }
-  
+
   addLink2() {
     this.subtaskControl2().push(this.initTask2());
   }
@@ -88,13 +88,13 @@ export class RegisterComponent implements OnInit {
   ////////////////////////////////////////////////////////
   initTask3() {
     return this.formBuilder.group({
-        "name": ['', Validators.required],
+      "name": ['', Validators.required],
     });
-  } 
-   subtaskControl3() {
+  }
+  subtaskControl3() {
     return this.form.get('hobbies') as FormArray;
   }
-  
+
   addLink3() {
     this.subtaskControl3().push(this.initTask3());
   }
@@ -104,13 +104,13 @@ export class RegisterComponent implements OnInit {
   ///////////////////////////////////////////////////////////////////
   initTask4() {
     return this.formBuilder.group({
-        "name": ['', Validators.required],
+      "name": ['', Validators.required],
     });
-  } 
-   subtaskControl4() {
+  }
+  subtaskControl4() {
     return this.form.get('contact') as FormArray;
   }
-  
+
   addLink4() {
     this.subtaskControl4().push(this.initTask4());
   }
@@ -120,19 +120,20 @@ export class RegisterComponent implements OnInit {
 
 
   /////////////////////////////////////////////////////////////////////////////////
-  selectCountry(item){
+  selectCountry(item) {
     this.selectCountry = item;
   }
   //////////////////////////////////////////////////////////////////
-  registerUser(){
+  registerUser() {
     this.submitted = true;
-    if (this.form.invalid){
+    if (this.form.invalid) {
       return;
     }
     this.loading = true;
     this.logService.registerUser(this.form.value);
+
     console.log(this.form.value);
-    this.router.navigate(['/login2'],{relativeTo:this.route});
+    this.router.navigate(['/login'], { relativeTo: this.route });
 
   }
 }

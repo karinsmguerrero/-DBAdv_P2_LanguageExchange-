@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import{ Person } from 'src/app/Models/person.model'
+import { Person } from 'src/app/Models/person.model'
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -8,8 +8,8 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  
-  user : Person;
+
+  user: Person;
   active = 1;
   constructor(
     private route: ActivatedRoute,
@@ -21,8 +21,8 @@ export class ProfileComponent implements OnInit {
     console.log(this.user.name);
   }
 
-  logout(){
+  logout() {
     localStorage.clear();
-    this.router.navigate(['/login2'],{relativeTo:this.route});
+    this.router.navigate(['/login'], { relativeTo: this.route });
   }
 }
