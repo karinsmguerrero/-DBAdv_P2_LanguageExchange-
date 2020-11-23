@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReportsService } from 'src/app/Services/reports.service';
+import { Contacts } from 'src/app/Models/contacts.model';
 @Component({
   selector: 'app-contact-config',
   templateUrl: './contact-config.component.html',
@@ -45,8 +46,6 @@ export class ContactConfigComponent implements OnInit {
 
     this.reportService.getUserInfo(JSON.parse(localStorage.getItem('user'))[0].user).then(res => {
       this.user = res[0] as Person;
-      // console.log(this.user.contact);
-      console.log(res)
     }
     );
 
@@ -61,14 +60,29 @@ export class ContactConfigComponent implements OnInit {
   };
 
   addContact() {
-    console.log(this.form.value.name);
     this.reportService.addContact(this.form.value);
+    this.reportService.getUserInfo(JSON.parse(localStorage.getItem('user'))[0].user).then(res => {
+      this.user = res[0] as Person;
+    });
   }
 
   deleteContact() {
     this.reportService.deleteContact(this.formd.value);
 
   }
+
+  deleteContactByTable( name : string) {
+    var con : Contacts = {
+      user : JSON.parse(localStorage.getItem('user'))[0].user,
+      name : name
+    }
+    this.reportService.deleteContact(con).then( res => {
+      this.reportService.getUserInfo(JSON.parse(localStorage.getItem('user'))[0].user).then(res => {
+        this.user = res[0] as Person;
+      });
+    });
+  }
+
 }
 
 

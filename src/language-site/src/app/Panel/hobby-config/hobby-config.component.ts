@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReportsService } from 'src/app/Services/reports.service';
+import { Hobbies } from 'src/app/Models/hobbies.model';
 
 
 @Component({
@@ -45,10 +46,7 @@ export class HobbyConfigComponent implements OnInit {
   ngOnInit(): void {
     this.reportService.getUserInfo(JSON.parse(localStorage.getItem('user'))[0].user).then(res => {
       this.user = res[0] as Person;
-      console.log(this.user.hobbies);
-      console.log(res)
-    }
-    );
+    });
 
     this.form = this.formBuilder.group({
       "user": JSON.parse(localStorage.getItem('user'))[0].user,
@@ -61,13 +59,31 @@ export class HobbyConfigComponent implements OnInit {
   };
   //////////////////////////////////////////////////////
   addHobby() {
-    console.log(this.form.value.name);
     this.reportService.addHobby(this.form.value);
+    this.reportService.getUserInfo(JSON.parse(localStorage.getItem('user'))[0].user).then(res => {
+      this.user = res[0] as Person;
+    });
   }
 
   deleteHobby() {
     this.reportService.deleteHobby(this.formd.value);
+    this.reportService.getUserInfo(JSON.parse(localStorage.getItem('user'))[0].user).then(res => {
+      this.user = res[0] as Person;
+    });
 
+  }
+
+  
+  deleteHobbyByTable( name : string) {
+    var hob : Hobbies = {
+      user : JSON.parse(localStorage.getItem('user'))[0].user,
+      name : name
+    }
+    this.reportService.deleteHobby(hob).then( res => {
+      this.reportService.getUserInfo(JSON.parse(localStorage.getItem('user'))[0].user).then(res => {
+        this.user = res[0] as Person;
+      });
+    });
   }
 
 }
