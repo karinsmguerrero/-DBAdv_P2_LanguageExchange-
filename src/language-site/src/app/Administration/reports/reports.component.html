@@ -1,0 +1,44 @@
+<div class=" d-flex justify-content-center">
+    <aside class="col-lg" style="margin: 5% 5% 5% 5%;">
+        <div class="card">
+            <article class="card-body">
+                <h4 class="card-title mb-4 mt-1">Reportes</h4>
+                <hr>
+                <div class="row">
+                    <!-- table -->
+                    <div class="col-md-12 table-responsive">
+                        <ul ngbNav #nav="ngbNav" [(activeId)]="active" [destroyOnHide]="false" class="nav-tabs">
+                            <li [ngbNavItem]="1" [destroyOnHide]="true">
+                                <a ngbNavLink>Lista de Usuarios</a>
+                                <ng-template ngbNavContent>
+                                    <app-users-report></app-users-report>
+                                </ng-template>
+                            </li>
+                            <li [ngbNavItem]="2" [destroyOnHide]="true">
+                                <a ngbNavLink>Usuarios por pais</a>
+                                <ng-template ngbNavContent>
+                                    <app-countries-report></app-countries-report>
+                                </ng-template>
+                            </li>
+                            <li [ngbNavItem]="3" [destroyOnHide]="true">
+                                <a ngbNavLink>Idiomas a ensenar</a>
+                                <ng-template ngbNavContent>
+                                    <app-teaching-report></app-teaching-report>
+                                </ng-template>
+                            </li>
+                            <li [ngbNavItem]="4" [destroyOnHide]="true">
+                                <a ngbNavLink>Idiomas a aprender</a>
+                                <ng-template ngbNavContent>
+                                    <app-learn-report></app-learn-report>
+                                </ng-template>
+                            </li>
+                        </ul>
+                        
+                    <div [ngbNavOutlet]="nav"></div>
+                    </div>
+                </div>
+            </article>
+        </div> <!-- card.// -->
+    </aside> <!-- col.// -->
+</div> <!-- row.// -->
+`

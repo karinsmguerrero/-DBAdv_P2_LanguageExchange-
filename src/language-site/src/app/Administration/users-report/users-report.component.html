@@ -1,0 +1,34 @@
+<article class="card-body" style="min-height: 475px;">
+    
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="table-responsive">
+                <div class=table-wrapper>
+                    <table class="table table-hover bike-table">
+                        <thead>
+                            <tr class="d-flex">
+                                <th class="col-3">Nombre</th>
+                                <th class="col-3">Apellido</th>
+                                <th class="col-3">Pais</th>
+                                <th class="col-3">Idiomas deseados</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="d-flex" *ngFor="let person2 of personReport"> 
+                                <td class="col-3">{{person2.name}}</td>
+                                <td class="col-3">{{person2.lastname1}}</td>
+
+                                <td class="col-3">{{person2.country}}</td>
+                                <td class="col-3">
+                                    <p *ngFor="let line of person2.lang_desired">{{line.name}}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg 3"></div>
+    </div>
+</article>

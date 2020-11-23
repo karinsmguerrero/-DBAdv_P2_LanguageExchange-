@@ -1,0 +1,27 @@
+<article class="card-body" style="min-height: 475px;">
+    
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="table-responsive">
+                <div class=table-wrapper>
+                    <table class="table table-hover bike-table">
+                        <thead>
+                            <tr class="d-flex">   
+                                <th class="col-3">Idioma</th>
+                                <th class="col-3">Cantidad de usuarios</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="d-flex" *ngFor="let report of learnReports"> 
+                                <td class="col-3">{{report._id}}</td>
+                                <td class="col-3">{{report.total}}</td>                               
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg 3"></div>
+    </div>
+</article>

@@ -1,0 +1,85 @@
+<app-navigation></app-navigation>
+<div class="container">
+    <div class="card">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+
+
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Perfil</h4>
+                <h6 class="text-muted card-subtitle mb-2">Nombre:</h6>
+                <h6 class="text-muted card-subtitle mb-2">{{user.name}}</h6>
+                <h6 class="text-muted card-subtitle mb-2">Pais:</h6>
+                <h6 class="text-muted card-subtitle mb-2">{{user.country}}</h6>
+                <h6 class="text-muted card-subtitle mb-2">Edad:</h6>
+                <h6 class="text-muted card-subtitle mb-2">{{user.age}}</h6>
+                <button class="btn btn-primary" (click)="logout()">
+                    Cerrar Sesion
+                </button>
+        </div>
+    </div>
+    
+</div>
+</div>
+
+<div class=" d-flex justify-content-center second">
+    <aside class="col-lg" style="margin: 5% 5% 5% 5%;">
+        <div class="card">
+            <article class="card-body">
+                <h4 class="card-title mb-4 mt-1">Panel de control</h4>
+                <hr>
+                <div class="row">
+                    <!-- table -->
+                    <div class="col-md-12 table-responsive">
+                        <ul ngbNav #nav="ngbNav" [(activeId)]="active" [destroyOnHide]="false" class="nav-tabs">
+                            <li [ngbNavItem]="1" [destroyOnHide]="true">
+                                <a ngbNavLink>Usuarios a enseñar</a>
+                                <ng-template ngbNavContent>
+                                    <app-person-teach></app-person-teach>
+                                </ng-template>
+                            </li>
+                            <li [ngbNavItem]="2" [destroyOnHide]="true">
+                                <a ngbNavLink>Aprender y Enseñar</a>
+                                <ng-template ngbNavContent>
+                                    <app-person-teach-desired></app-person-teach-desired>
+                                </ng-template>
+                            </li>
+                            <li [ngbNavItem]="3" [destroyOnHide]="true">
+                                <a ngbNavLink>Aprender y Enseñar por origen</a>
+                                <ng-template ngbNavContent>
+                                    <app-person-teach-desired-country></app-person-teach-desired-country>
+                                </ng-template>
+                            </li>
+                            <li [ngbNavItem]="4" [destroyOnHide]="true">
+                                <a ngbNavLink>Aprender y enseñar por edad</a>
+                                <ng-template ngbNavContent>
+                                    <app-person-teach-desired-age></app-person-teach-desired-age>
+                                </ng-template>
+                            </li>
+                            <li [ngbNavItem]="5" [destroyOnHide]="true">
+                                <a ngbNavLink>Hobbies</a>
+                                <ng-template ngbNavContent>
+                                    <app-hobby-config></app-hobby-config>
+                                </ng-template>
+                            </li>
+                            <li [ngbNavItem]="6" [destroyOnHide]="true">
+                                <a ngbNavLink>Contacto</a>
+                                <ng-template ngbNavContent>
+                                    <app-contact-config></app-contact-config>
+                                </ng-template>
+                            </li>
+                        </ul>
+                        
+                    <div [ngbNavOutlet]="nav"></div>
+                    </div>
+                </div>
+            </article>
+        </div> 
+    </aside> 
+</div> 
+</div>
