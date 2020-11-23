@@ -7,7 +7,7 @@ const app = express();
 
 //Middleware
 var corsOptions = {
-    origin: "http://localhost:4200"
+  origin: "http://localhost:4200"
 };
 
 app.use(cors(corsOptions));
@@ -19,7 +19,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //Database connection
-const uri = "mongodb+srv://test:test123@tec.jlazn.mongodb.net/Proyecto2?retryWrites=true&w=majority";
+// const uri = "mongodb+srv://test:test123@tec.jlazn.mongodb.net/Proyecto2?retryWrites=true&w=majority";
+const uri = "mongodb://langexchange.centralus.cloudapp.azure.com:27017,langexchange.eastus.cloudapp.azure.com:27017,langexchange.westus.cloudapp.azure.com:27017/?replicaSet=rsLangEx&retryWrites=true&w=majority";
 
 // connection to db
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -31,5 +32,5 @@ require("./routes/routes.js")(app);
 
 // set port, listen for requests
 app.listen(3000, () => {
-    console.log("Server is running on port 3000.");
+  console.log("Server is running on port 3000.");
 });

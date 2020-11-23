@@ -52,6 +52,84 @@ content-type: application/json
    ]
 }
 
+###
+POST  http://localhost:3000/api/register HTTP/1.1
+content-type: application/json
+
+{
+   "user": "VM",
+    "password" : "123",
+   "name":"Veroica",
+   "lastname1":"Mort",
+   "lastname2":"Firscher",
+   "age":43,
+   "sex":"F",
+   "country":"Alemania",
+   "lang_desired":[
+      {
+         "name":"Italiano",
+         "level" : "Principiante"
+      },
+       {
+         "name":"Español",
+         "level" : "Principiante"
+      }
+   ],
+   "lang_teach":[
+      {
+         "name":"Alemán",
+         "level" : "Avanzado"
+      },
+      {
+         "name":"Portugués",
+         "level" : "Intermedio"
+      }
+   ],
+   "contact":[
+      {
+         "name":"Skype"
+      },
+       {
+         "name":"Whatsapp"
+      }
+   ]
+}
+
+###
+POST  http://localhost:3000/api/register HTTP/1.1
+content-type: application/json
+
+{
+   "user": "ASPT",
+    "password" : "123",
+   "name":"Ansopio",
+   "lastname1":"Perez",
+   "lastname2":"Gris",
+   "age":48,
+   "sex":"M",
+   "country":"Guatemala",
+   "lang_desired":[
+      {
+         "name":"Ingles",
+         "level" : "Principiante"
+      },
+       {
+         "name":"Zulu",
+         "level" : "Principiante"
+      }
+   ],
+   "lang_teach":[
+      {
+         "name":"Español",
+         "level" : "Avanzado"
+      }
+   ],
+   "contact":[
+       {
+         "name":"Email"
+      }
+   ]
+}
 
 ### 
 
