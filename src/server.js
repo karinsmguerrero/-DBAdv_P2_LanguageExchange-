@@ -18,6 +18,11 @@ app.use(bodyParser.json());
 // parse requests of content-type: application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(express.static(__dirname+'/language-site/dist/language-site'))
+
+app.get("/", function(req, res)  {
+  res.sendFile(__dirname+'/language-site/dist/language-site/index.html');
+});
 //Database connection
 const uri = "mongodb+srv://test:test123@tec.jlazn.mongodb.net/Proyecto2?retryWrites=true&w=majority";
 
