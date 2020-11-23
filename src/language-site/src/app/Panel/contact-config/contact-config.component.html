@@ -1,0 +1,65 @@
+<article class="card-body" style="min-height: 475px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <form [formGroup]="form" (ngSubmit)="addContact()">
+                <div class="form-group">    
+                   
+                        <label for="firstName">Nombre</label>
+                        <input type="text" formControlName="name" class="form-control" />
+                    
+                    <div class="col-lg-2">
+                        <button class="btn btn-primary btn-block">Añadir</button>
+                    </div>
+                            
+                        </div>
+
+            </form>
+        </div>
+
+        <div class="col-lg-12">
+            <form [formGroup]="formd" (ngSubmit)="deleteContact()">
+                <div class="form-group">    
+                   
+                        <label for="firstName">Nombre</label>
+                        <div>
+                            <select formControlName="name">
+                                <option *ngFor="let r of user.contact" [value]="r.name">
+                                             {{r.name}}
+                                </option>
+                             </select>
+                        </div>
+
+                    <div class="col-lg-2">
+                        <button class="btn btn-primary btn-block">Borrar</button>
+                    </div>
+                            
+                        </div>
+
+            </form>
+        </div>
+        
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="table-responsive">
+                <div class=table-wrapper>
+                    <table class="table table-hover bike-table">
+                        <thead>
+                            <tr class="d-flex">   
+                                <th class="col-3">Contacto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="d-flex" *ngFor="let report of user.contact"> 
+                                <td class="col-3">{{report.name}}</td>                             
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg 3"></div>
+    </div>
+</article>

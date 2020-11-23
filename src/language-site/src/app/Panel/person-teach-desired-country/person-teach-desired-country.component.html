@@ -1,0 +1,64 @@
+<article class="card-body" style="min-height: 475px;">
+    <div class="row">
+        <div class="col-lg-12">
+            <form [formGroup]="form" (ngSubmit)="getUsers()">
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-lg-2" style="text-align: center;">
+                            <label>Paises: </label>
+                        </div>
+                        <div formArrayName="countries">
+                            <div *ngFor="let subtask of subtaskControl().controls; let i=index">
+                                <div [formGroupName]="i">
+                                    <select formControlName="name">
+                                        <option *ngFor="let r of countries" [value]="r.name">
+                                                     {{r.name}}
+                                        </option>
+                                     </select>
+                                     <div>
+                                        <a class="btn  btn-sm" (click)="addLink()">Add</a>
+                                        <a class="btn  btn-sm" (click)="removeLink(i)">REMOVE</a>
+                                    </div>
+                                     </div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <button class="btn btn-primary btn-block">Aceptar</button>
+                        </div>
+                    </div>
+                
+            </form>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="table-responsive">
+                <div class=table-wrapper>
+                    <table class="table table-hover bike-table">
+                        <thead>
+                            <tr class="d-flex">   
+                                <th class="col-3">Nombre</th>
+                                <th class="col-3">Apellido</th>
+                                <th class="col-3">Lenguaje deseado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="d-flex" *ngFor="let report of users"> 
+                                <td class="col-3">{{report.name}}</td>
+                                <td class="col-3">{{report.lastname1}}</td>   
+                                <td class="col-3">
+                                    <p *ngFor="let line of report.lang_desired">{{line.name}}</p>
+                                </td>                            
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg 3"></div>
+    </div>
+</article>

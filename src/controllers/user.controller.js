@@ -24,6 +24,30 @@ module.exports.checkCredentials = async (req, res) => {
     return;
 };
 
+module.exports.checkLogin = async (req, res) => {
+    console.log("checking");
+    const rs = await user.find({user: req.body.user, password:req.body.password});
+    if(rs.length == 0)
+        res.send([{ result : 2}]);
+    else
+        //res.send( rs);
+        console.log(rs);
+        res.send(rs);
+    return;
+};
+
+module.exports.getUserInfo = async (req, res) => {
+    console.log("checking");
+    const rs = await user.find({user: req.body.user});
+    if(rs.length == 0)
+        res.send([{ result : 2}]);
+    else
+        //res.send( rs);
+        console.log(rs);
+        res.send(rs);
+    return;
+};
+
 module.exports.register = async (req, res) => {
     var ans;
     await user.find({ user: { $exists: true, $eq: req.body.user } }, { _id: 0, user: 1 }, function (err, result) {

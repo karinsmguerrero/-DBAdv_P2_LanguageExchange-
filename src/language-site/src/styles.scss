@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+$Bikes-1-hex: #3C851B;
+$Bikes-2-hex: #7FC210;
+$Bikes-3-hex: #0E8F94;
+$Bikes-4-hex: #6FCCD6;
+$Bikes-5-hex: #175668;
+/* Importing Bootstrap SCSS file. */
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr 1fr 1fr;
+    grid-template-rows: 0.5fr 1.7fr 0.8fr;
+    gap: 0px 0px;
+    grid-template-areas:
+      ". . . ."
+      "profile . . ."
+      ". . . .";
+  }
+  
+  .profile { grid-area: profile; }
+  
+
+
+@import '~bootstrap/scss/bootstrap';
+
+
