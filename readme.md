@@ -1,4 +1,7 @@
+# DBAdv_P2_LanguageExchange
+Proyecto 1 Bases de Datos Avanzadas ITCR
 
+### Instrucciones y pasos a seguir
 
 Ir a la carpeta src y hacer npm install
 
