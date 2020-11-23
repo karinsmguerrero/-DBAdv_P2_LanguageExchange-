@@ -10,7 +10,7 @@
                         <div class="col-lg-6" formArrayName="countries">
                             <div *ngFor="let subtask of subtaskControl().controls; let i=index">
                                 <div [formGroupName]="i">
-                                    <select formControlName="name">
+                                    <select formControlName="name" class="form-control">
                                         <option *ngFor="let r of countries" [value]="r.name">
                                             {{r.name}}
                                         </option>
@@ -47,7 +47,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <td *ngIf="users.length == 0">No hay usuarios</td>
+                            <tr><td *ngIf="users.length == 0">No hay usuarios</td></tr>
                             <tr class="d-flex" *ngFor="let report of users">
                                 
                                 <td class="col-3">{{report.name}}</td>
