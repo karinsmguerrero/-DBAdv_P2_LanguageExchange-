@@ -6,6 +6,10 @@ import { environment } from 'src/environments/environment';
 import { Country } from '../Models/country';
 import { Person } from '../Models/person.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Language, languages } from 'countries-list';
+import { isParameter } from 'typescript';
+//import { ConsoleReporter } from 'jasmine';
+//port { Console } from 'console';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +17,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class LoginService {
   user: User[] = [];
   countries: Country[] = [];
+
   constructor(public http: HttpClient, 
               private toastr: ToastrService,
               private route: ActivatedRoute,

@@ -20,6 +20,8 @@ export class RegisterComponent implements OnInit {
   countries: Country[] = [];
   levels: string[] = ["Principiante", "Intermedio", "Avanzado"];
   sexo: string[] = ["Femenino", "Masculino", "No decir"];
+  languages: string[]=["Español","Inglés","Alemán","Francés","Ruso","Portugués","Italiano","Nepalí","Zulú","Malay"];
+  contacts: string[]=["Whatsapp","Skype","Pagina web","En persona"];
   keyword = "name";
   selectedCountry: Country = {
     name: "seleccione un pais"
@@ -105,6 +107,7 @@ export class RegisterComponent implements OnInit {
   initTask4() {
     return this.formBuilder.group({
       "name": ['', Validators.required],
+      "value": ['', Validators.required]
     });
   }
   subtaskControl4() {

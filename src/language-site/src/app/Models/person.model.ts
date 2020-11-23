@@ -10,5 +10,5 @@ export class Person {
     lang_desired: [{ name : String, level : String}];
     lang_teach:[{ name : String, level : String}];
     hobbies: [{ name : String}];
-    contact:[{ name : String}];
+    contact:[{ name : String, value: string}];
 }
