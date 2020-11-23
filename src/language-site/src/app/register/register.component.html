@@ -43,7 +43,11 @@
                 <div *ngFor="let subtask of subtaskControl().controls; let i=index">
                     <div [formGroupName]="i">
                         <label for="password">Lenguajes deseados</label>
-                        <input type="text" formControlName="name" class="form-control"/>
+                        <select formControlName="name">
+                            <option *ngFor="let r of languages" [value]="r">
+                                         {{r}}
+                            </option>
+                         </select>
                         <label for="password">Nivel de Conocimiento</label>
                         <select formControlName="level">
                             <option *ngFor="let r of levels" [value]="r">
@@ -52,8 +56,8 @@
                         </select>
                     </div>
                     <div>
-                        <a class="btn  btn-sm" (click)="addLink()">Add</a>
-                        <a class="btn  btn-sm" (click)="removeLink(i)">REMOVE</a>
+                        <a class="btn  btn-sm" (click)="addLink()">Añadir</a>
+                        <a class="btn  btn-sm" (click)="removeLink(i)">Eliminar</a>
                     </div>
                 </div>
             </div>
@@ -62,7 +66,11 @@
                 <div *ngFor="let subtask of subtaskControl2().controls; let i=index">
                     <div [formGroupName]="i">
                         <label for="password">Lenguajes aprendidos</label>
-                        <input type="text" formControlName="name" class="form-control"/>
+                        <select formControlName="name">
+                            <option *ngFor="let r of languages" [value]="r">
+                                         {{r}}
+                            </option>
+                         </select>
                         <label for="password">Nivel de Conocimiento</label>
                         <select formControlName="level">
                             <option *ngFor="let r of levels" [value]="r">
@@ -71,8 +79,8 @@
                         </select>
                     </div>
                     <div>
-                        <a class="btn  btn-sm" (click)="addLink2()">Add</a>
-                        <a class="btn  btn-sm" (click)="removeLink2(i)">REMOVE</a>
+                        <a class="btn  btn-sm" (click)="addLink2()">Añadir</a>
+                        <a class="btn  btn-sm" (click)="removeLink2(i)">Eliminar</a>
                     </div>
                 </div>
             </div>
@@ -83,8 +91,8 @@
                         <input type="text" formControlName="name" class="form-control"/>
                     </div>
                     <div>
-                        <a class="btn  btn-sm" (click)="addLink3()">ADD</a>
-                        <a class="btn  btn-sm" (click)="removeLink3(i)">REMOVE</a>
+                        <a class="btn  btn-sm" (click)="addLink3()">Añadir</a>
+                        <a class="btn  btn-sm" (click)="removeLink3(i)">Eliminar</a>
                     </div>
                 </div>
             </div>
@@ -92,20 +100,29 @@
                 <div *ngFor="let subtask of subtaskControl4().controls; let i=index">
                     <div [formGroupName]="i">
                         <label for="password">Contacto</label>
-                        <input type="text" formControlName="name" class="form-control"/>
+                        <div>
+                            <select formControlName="name">
+                                <option *ngFor="let r of contacts" [value]="r">
+                                            {{r}}
+                                </option>
+                            </select>
+                        </div>
+                        <div>
+                            <input type="text" formControlName="value" class="form-control"/>
+                        </div>
                     </div>
                     <div>
-                        <a class="btn  btn-sm" (click)="addLink4()">Add</a>
-                        <a class="btn  btn-sm" (click)="removeLink4(i)">REMOVE</a>
+                        <a class="btn  btn-sm" (click)="addLink4()">Añadir</a>
+                        <a class="btn  btn-sm" (click)="removeLink4(i)">Eliminar</a>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="firstName">Username</label>
+                <label for="firstName">Usuario</label>
                 <input type="text" formControlName="user" class="form-control"/>
             </div>
             <div class="form-group">
-                <label for="firstName">Password</label>
+                <label for="firstName">Contraseña</label>
                 <input type="password" formControlName="password" class="form-control"/>
             </div>
             <div class="form-group">

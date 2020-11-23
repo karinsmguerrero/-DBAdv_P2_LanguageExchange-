@@ -48,12 +48,14 @@
                     <table class="table table-hover bike-table">
                         <thead>
                             <tr class="d-flex">   
-                                <th class="col-3">Contacto</th>
+                                <th class="col-5">Contacto</th>
+                                <th class="col-5">Descripcion</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="d-flex" *ngFor="let report of user.contact"> 
-                                <td class="col-3">{{report.name}}</td>                             
+                                <td class="col-5">{{report.name}}</td>      
+                                <td class="col-5">{{report.value}}</td>                          
                             </tr>
                         </tbody>
                     </table>
