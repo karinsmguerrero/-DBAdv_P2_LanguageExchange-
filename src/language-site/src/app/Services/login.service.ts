@@ -29,7 +29,7 @@ export class LoginService {
     await this.http.post(environment.API + '/login', body, httpOptions).toPromise().then(res =>{
       console.log(res);
       if(res[0].result==2){
-        console.log('nope')
+        this.toastr.error('El usuario o la contraseña es incorrecto', 'Error');
       }
       else{
         console.log('yes');
@@ -51,13 +51,11 @@ export class LoginService {
   }
   async getCountries() {
     await this.http.get('https://restcountries.eu/rest/v2/all?fields=name').toPromise().then(res => {
-      console.log(res);
       this.countries = res as Country[];
     }, error => {
       this.toastr.error('No se pudieron cargar los paises', 'Error!');
       console.log(error);
     });
-    console.log(this.countries);
     return this.countries;
   }
 

@@ -1,26 +1,145 @@
+@import '~bootstrap/scss/bootstrap';
+@import '~ngx-toastr/toastr';
 /* You can add global styles to this file, and also import other style files */
 $Bikes-1-hex: #3C851B;
 $Bikes-2-hex: #7FC210;
 $Bikes-3-hex: #0E8F94;
 $Bikes-4-hex: #6FCCD6;
 $Bikes-5-hex: #175668;
+$background : #FAFAFA;
 /* Importing Bootstrap SCSS file. */
 
 .grid-container {
-    display: grid;
-    grid-template-columns: 0.8fr 1.2fr 1fr 1fr;
-    grid-template-rows: 0.5fr 1.7fr 0.8fr;
-    gap: 0px 0px;
-    grid-template-areas:
-      ". . . ."
-      "profile . . ."
-      ". . . .";
+  display              : grid;
+  grid-template-columns: 0.8fr 1.2fr 1fr 1fr;
+  grid-template-rows   : 0.5fr 1.7fr 0.8fr;
+  gap                  : 0px 0px;
+  grid-template-areas  :
+    ". . . ."
+    "profile . . ."
+    ". . . .";
+}
+
+.profile {
+  grid-area: profile;
+}
+
+body {
+  background-color: #ededed;
+}
+
+.line {
+  background-color: $Bikes-2-hex;
+  height          : 5px;
+  width           : 100%;
+}
+
+.bike-nav {
+  background-color: $Bikes-5-hex;
+}
+
+.bike-table {
+  thead {
+      background-color: scale-color($Bikes-4-hex, $lightness: 10%);
+      color           : white;
+      text-align: center;
   }
-  
-  .profile { grid-area: profile; }
-  
 
+  tbody{
+      text-align: center;
+  }
 
-@import '~bootstrap/scss/bootstrap';
+  tfoot {
+      background-color: scale-color($Bikes-4-hex, $lightness: 30%);
+      color           : white;
+      text-align: center;
+  }
+}
 
+.btn-outline-primary {
+  border-color: $Bikes-2-hex !important;
+  color       : $Bikes-2-hex;
 
+  &:hover {
+      background-color: $Bikes-2-hex !important;
+      color           : white;
+  }
+
+}
+
+.dropdown-item {
+  &:hover {
+      background-color: white !important;
+      color           : black;
+  }
+}
+
+.dropdown-toggle {
+  background-color: white;
+  color           : $Bikes-2-hex;
+
+  &:visited {
+      background-color: $Bikes-2-hex !important;
+      color           : white;
+  }
+
+  &:hover {
+      background-color: $Bikes-2-hex !important;
+      color           : white;
+  }
+
+  &:focus {
+      background-color: $Bikes-2-hex !important;
+      color           : white;
+  }
+
+  &:active {
+      background-color: $Bikes-2-hex !important;
+      color           : white;
+  }
+}
+
+.btn-primary {
+  background-color: $Bikes-2-hex !important;
+  border-color    : transparent;
+
+  &:hover {
+      background-color: scale-color($Bikes-2-hex, $lightness: -15%) !important;
+      color           : white;
+      border-color    : transparent;
+  }
+}
+
+.btn-icon {
+  background-color: transparent;
+  border          : transparent;
+}
+
+/* this is for clicked or active tabs */
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  background-color: scale-color($Bikes-4-hex, $lightness: -5%);
+  color      : $Bikes-3-hex;
+  font-size  : 15px;
+  font-weight: bold;
+}
+
+/* this is for normal tabs */
+.nav-tabs .nav-link {
+  //background-color: white;
+  background-color: scale-color($Bikes-4-hex, $lightness: 45%);
+  color           : $Bikes-3-hex;
+  font-size       : 15px;
+  font-weight     : bold;
+}
+
+.ng-autocomplete {
+  width    : 100%;
+  max-width: 300px;
+  display  : table;
+  margin   : 0 auto;
+}
+
+.tab-body{
+  margin-top: 5%;
+}
