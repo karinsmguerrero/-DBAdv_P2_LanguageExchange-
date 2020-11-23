@@ -7,6 +7,8 @@ module.exports = app => {
     app.post("/api/login", user.checkLogin);
     //Handles user registration
     app.post("/api/register", user.register);
+    // Handle user information
+    app.post("/api/userinfo", user.getUserInfo);
     // Handles hobby adding
     app.put("/api/addHobby", user.addHobby);
     // Handles hobby deletion
