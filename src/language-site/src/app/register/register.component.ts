@@ -20,8 +20,8 @@ export class RegisterComponent implements OnInit {
   countries: Country[] = [];
   levels: string[] = ["Principiante", "Intermedio", "Avanzado"];
   sexo: string[] = ["Femenino", "Masculino", "No decir"];
-  languages: string[]=["Español","Inglés","Alemán","Francés","Ruso","Portugués","Italiano","Nepalí","Zulú","Malay"];
-  contacts: string[]=["Whatsapp","Skype","Pagina web","En persona"];
+  languages: string[] = ["Español", "Inglés", "Alemán", "Francés", "Ruso", "Portugués", "Italiano", "Nepalí", "Zulú", "Malay"];
+  contacts: string[] = ["Whatsapp", "Skype", "Pagina web", "En persona"];
   keyword = "name";
   selectedCountry: Country = {
     name: "seleccione un pais"
@@ -130,10 +130,13 @@ export class RegisterComponent implements OnInit {
   registerUser() {
     this.submitted = true;
     if (this.form.invalid) {
+      this.toastr.error('No se ha podido registrar', 'Error');
       return;
     }
     this.loading = true;
-    this.logService.registerUser(this.form.value);
+    this.logService.registerUser(this.form.value).then(res => {
+      console.log(res);
+    });
 
     console.log(this.form.value);
     this.router.navigate(['/login'], { relativeTo: this.route });

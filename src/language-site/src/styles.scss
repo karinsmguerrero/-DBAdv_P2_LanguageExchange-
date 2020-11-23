@@ -27,7 +27,10 @@ $background : #FAFAFA;
 body {
   background-color: #ededed;
 }
-
+ .login{
+   background-color: $Bikes-3-hex;
+   color: #fff;
+ }
 .line {
   background-color: $Bikes-2-hex;
   height          : 5px;
