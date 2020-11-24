@@ -24,8 +24,8 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/language-site/dist/language-site/index.html');
 });
 //Database connection
-const uri = "mongodb+srv://test:test123@tec.jlazn.mongodb.net/Proyecto2?retryWrites=true&w=majority";
-//const uri = "mongodb://langexchange.centralus.cloudapp.azure.com:27017,langexchange.eastus.cloudapp.azure.com:27017,langexchange.westus.cloudapp.azure.com:27017/?replicaSet=rsLangEx&retryWrites=true&readPreference=nearest&w=majority";
+// const uri = "mongodb+srv://test:test123@tec.jlazn.mongodb.net/Proyecto2?retryWrites=true&w=majority";
+const uri = "mongodb://langexchange.centralus.cloudapp.azure.com:27017,langexchange.eastus.cloudapp.azure.com:27017,langexchange.westus.cloudapp.azure.com:27017/?replicaSet=rsLangEx&retryWrites=true&readPreference=nearest&w=majority";
 
 // connection to db
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })

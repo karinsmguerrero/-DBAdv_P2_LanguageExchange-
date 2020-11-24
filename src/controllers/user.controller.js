@@ -106,7 +106,7 @@ module.exports.deleteHobby = async (req, res) => {
 module.exports.addContact = async (req, res) => {
     const ans = await user.updateOne(
         { user: req.body.user },
-        { $push: { contact: { name: req.body.name } } }
+        { $push: { contact: { name: req.body.name, value: req.body.value } } }
     )
     if (ans.nModified >= 1) {
         res.send({ result: 1 });

@@ -29,6 +29,7 @@ export class ContactConfigComponent implements OnInit {
     hobbies: null,
     contact: null
   };
+  contacts: string[] = ["Whatsapp", "Skype", "Pagina web", "En persona"];
   form: FormGroup;
   formd: FormGroup;
   constructor(
@@ -51,7 +52,8 @@ export class ContactConfigComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       "user": JSON.parse(localStorage.getItem('user'))[0].user,
-      "name": ['', Validators.required]
+      "name": ['', Validators.required],
+      "value": ['', Validators.required]
     });
     this.formd = this.formBuilder.group({
       "user": JSON.parse(localStorage.getItem('user'))[0].user,
@@ -60,10 +62,12 @@ export class ContactConfigComponent implements OnInit {
   };
 
   addContact() {
-    this.reportService.addContact(this.form.value);
-    this.reportService.getUserInfo(JSON.parse(localStorage.getItem('user'))[0].user).then(res => {
-      this.user = res[0] as Person;
+    this.reportService.addContact(this.form.value).then(res => {
+      this.reportService.getUserInfo(JSON.parse(localStorage.getItem('user'))[0].user).then(res => {
+        this.user = res[0] as Person;
+      });
     });
+
   }
 
   deleteContact() {
@@ -71,12 +75,13 @@ export class ContactConfigComponent implements OnInit {
 
   }
 
-  deleteContactByTable( name : string) {
-    var con : Contacts = {
-      user : JSON.parse(localStorage.getItem('user'))[0].user,
-      name : name
+  deleteContactByTable(name: string) {
+    var con: Contacts = {
+      user: JSON.parse(localStorage.getItem('user'))[0].user,
+      name: name,
+      value: ''
     }
-    this.reportService.deleteContact(con).then( res => {
+    this.reportService.deleteContact(con).then(res => {
       this.reportService.getUserInfo(JSON.parse(localStorage.getItem('user'))[0].user).then(res => {
         this.user = res[0] as Person;
       });

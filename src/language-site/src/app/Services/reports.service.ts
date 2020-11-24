@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ReportCountries } from 'src/app/Models/report-countries.model';
 import { ReportLearn } from 'src/app/Models/report-learn.model';
-import { ReportTeach} from 'src/app/Models/report-teach.model';
+import { ReportTeach } from 'src/app/Models/report-teach.model';
 import { Person } from 'src/app/Models/person.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
@@ -16,33 +16,33 @@ import { Contacts } from 'src/app/Models/contacts.model';
   providedIn: 'root'
 })
 export class ReportsService {
-  countriesReport: ReportCountries[] =[];
-  personReport : Person [] = [];
-  learnReport: ReportLearn[] =[];
-  teachReport: ReportTeach[]= [];
-  userReport:Person []=[];
-  consult34: ReportLangAge[] =[];
-  userSession : Person;
+  countriesReport: ReportCountries[] = [];
+  personReport: Person[] = [];
+  learnReport: ReportLearn[] = [];
+  teachReport: ReportTeach[] = [];
+  userReport: Person[] = [];
+  consult34: ReportLangAge[] = [];
+  userSession: Person;
 
 
-  constructor(public http: HttpClient, private toastr: ToastrService,private route: ActivatedRoute,
-               private router: Router) { }
+  constructor(public http: HttpClient, private toastr: ToastrService, private route: ActivatedRoute,
+    private router: Router) { }
 
-  async getUsersReport(){
+  async getUsersReport() {
     await this.http.get(environment.API + '/reports/5').toPromise().then(res => {
       this.personReport = res as Person[];
-    },error => {
+    }, error => {
       this.toastr.error('No se pudieron cargar los usuarios', 'Error!');
       console.log(error);
     });
     console.log(this.personReport);
     return this.personReport;
   }
-  
-  async getCountriesReport(){
+
+  async getCountriesReport() {
     await this.http.get(environment.API + '/reports/6').toPromise().then(res => {
       this.countriesReport = res as ReportCountries[];
-    },error => {
+    }, error => {
       this.toastr.error('No se pudieron cargar la cantidad de usuarios', 'Error!');
       console.log(error);
     });
@@ -50,10 +50,10 @@ export class ReportsService {
     return this.countriesReport;
   }
 
-  async getTeachReport(){
+  async getTeachReport() {
     await this.http.get(environment.API + '/reports/7').toPromise().then(res => {
       this.teachReport = res as ReportTeach[];
-    },error => {
+    }, error => {
       this.toastr.error('No se pudieron cargar la cantidad de usuarios', 'Error!');
       console.log(error);
     });
@@ -61,18 +61,18 @@ export class ReportsService {
     return this.teachReport;
   }
 
-  async getLearnReport(){
+  async getLearnReport() {
     await this.http.get(environment.API + '/reports/8').toPromise().then(res => {
       this.learnReport = res as ReportLearn[];
-    },error => {
+    }, error => {
       this.toastr.error('No se pudieron cargar la cantidad de usuarios', 'Error!');
       console.log(error);
     });
     console.log(this.learnReport);
     return this.learnReport;
   }
-  
-  async getUserInfo(name: string){
+
+  async getUserInfo(name: string) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
@@ -82,17 +82,17 @@ export class ReportsService {
     await this.http.post(environment.API + '/userinfo', body, httpOptions).toPromise().then(res => {
       console.log(res);
       this.userSession = res as Person;
-      
-    }, error =>{
+
+    }, error => {
       this.toastr.error('No existen usuarios con estas caracteristicas', 'Error!');
       console.log(error);
     });
     console.log(this.userSession);
     return this.userSession as Person;
   }
-  
 
-  async getLangTeach(person: Person){
+
+  async getLangTeach(person: Person) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
@@ -106,7 +106,7 @@ export class ReportsService {
       "sex": person.sex,
       "country": person.country,
       "lang_desired": person.lang_teach,
-      "lang_teach":person.lang_teach,
+      "lang_teach": person.lang_teach,
       "hobbies": person.hobbies,
       "contact": person.contact
     }
@@ -115,14 +115,14 @@ export class ReportsService {
     await this.http.post(environment.API + '/reports/1', body, httpOptions).toPromise().then(res => {
       console.log(res);
       this.userReport = res as Person[];
-    }, error =>{
+    }, error => {
       this.toastr.error('No existen usuarios con estas caracteristicas', 'Error!');
       console.log(error);
     });
     return this.userReport;
   }
 
-  async getLangDesiredTeach(person: Person){
+  async getLangDesiredTeach(person: Person) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
@@ -136,20 +136,20 @@ export class ReportsService {
       "sex": person.sex,
       "country": person.country,
       "lang_desired": person.lang_teach,
-      "lang_teach":person.lang_desired,
+      "lang_teach": person.lang_desired,
       "hobbies": person.hobbies,
       "contact": person.contact
     }
     await this.http.post(environment.API + '/reports/2', body, httpOptions).toPromise().then(res => {
       console.log(res);
       this.userReport = res as Person[];
-    }, error =>{
+    }, error => {
       this.toastr.error('No existen usuarios con estas caracteristicas', 'Error!');
       console.log(error);
     });
     return this.userReport;
   }
-  async getLangDesiredTeachCounntry(person: ReportLangAge){
+  async getLangDesiredTeachCounntry(person: ReportLangAge) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
@@ -162,44 +162,44 @@ export class ReportsService {
       console.log(res);
       this.userReport = res as Person[];
       console.log(this.userReport);
-    }, error =>{
+    }, error => {
       this.toastr.error('No existen usuarios con estas caracteristicas', 'Error!');
       console.log(error);
     });
     return this.userReport;
   }
 
-  async getLangDesiredTeachAge(person: ReportLangAge){
+  async getLangDesiredTeachAge(person: ReportLangAge) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
     const body = {
       countries: person.countries,
       lang_desired: person.lang_teach,
-      lang_teach:person.lang_desired,
+      lang_teach: person.lang_desired,
       age: person.age
     }
     await this.http.post(environment.API + '/reports/4', body, httpOptions).toPromise().then(res => {
       console.log(res);
       this.userReport = res as Person[];
       console.log(this.userReport);
-    }, error =>{
+    }, error => {
       this.toastr.error('No existen usuarios con estas caracteristicas', 'Error!');
       console.log(error);
     });
     return this.userReport;
   }
 
-  async addHobby(person: Hobbies){
+  async addHobby(person: Hobbies) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
     const body = {
-     user: person.user,
-     name : person.name
+      user: person.user,
+      name: person.name
     }
     console.log(body.name);
-    await this.http.put(environment.API + '/addHobby',body, httpOptions).toPromise().then(res => {
+    await this.http.put(environment.API + '/addHobby', body, httpOptions).toPromise().then(res => {
       console.log(res);
     }, error => {
       this.toastr.error('No se pudo anadir el hobby', 'Error');
@@ -210,15 +210,15 @@ export class ReportsService {
     };
   }
 
-  async deleteHobby(person: Hobbies){
+  async deleteHobby(person: Hobbies) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-      body : {
+      body: {
         user: person.user,
-        name : person.name
-       }
+        name: person.name
+      }
     }
-    await  this.http.request('delete', environment.API + '/deleteHobby', httpOptions).toPromise().then(res => {
+    await this.http.request('delete', environment.API + '/deleteHobby', httpOptions).toPromise().then(res => {
       console.log(res);
     }, error => {
       this.toastr.error('No se pudo anadir el hobby', 'Error');
@@ -229,16 +229,17 @@ export class ReportsService {
     };
   }
 
-  async addContact(person: Contacts){
+  async addContact(person: Contacts) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     }
     const body = {
-     user: person.user,
-     name : person.name
+      user: person.user,
+      name: person.name,
+      value: person.value
     }
     console.log(body.name);
-    await this.http.put(environment.API + '/addContact',body, httpOptions).toPromise().then(res => {
+    await this.http.put(environment.API + '/addContact', body, httpOptions).toPromise().then(res => {
       console.log(res);
     }, error => {
       this.toastr.error('No se pudo anadir el contacto', 'Error');
@@ -249,15 +250,15 @@ export class ReportsService {
     };
   }
 
-  async deleteContact(person: Contacts){
+  async deleteContact(person: Contacts) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-      body : {
+      body: {
         user: person.user,
-        name : person.name
-       }
+        name: person.name
+      }
     }
-    await  this.http.request('delete', environment.API + '/deleteContact', httpOptions).toPromise().then(res => {
+    await this.http.request('delete', environment.API + '/deleteContact', httpOptions).toPromise().then(res => {
       console.log(res);
     }, error => {
       this.toastr.error('No se pudo anadir el contacto', 'Error');
@@ -267,5 +268,5 @@ export class ReportsService {
       return false;
     };
   }
-  
+
 }

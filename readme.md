@@ -26,7 +26,4 @@ o
 $ cd ..
 $ node server.js
 
-Se puede visitar el sitio yendo a la página
-
-$ 
 

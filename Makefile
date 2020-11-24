@@ -29,8 +29,8 @@ east:
 	$(E_SSH) npm install
 	echo "Installing angular dependencies"
 	$(E_SSH) "cd src/language-site && npm install"
-	# echo "Building angular app"
-	# $(E_SSH) "cd src/language-site && ng build --prod"
+	echo "Building angular app"
+	$(E_SSH) "cd src/language-site && ng build --prod"
 
 west:
 	echo "Compressing files for upload"
@@ -44,8 +44,8 @@ west:
 	$(W_SSH) npm install
 	echo "Installing angular dependencies"
 	$(W_SSH) "cd src/language-site && npm install"
-	# echo "Building angular app"
-	# $(W_SSH) "cd src/language-site && ng build --prod"
+	echo "Building angular app"
+	$(W_SSH) "cd src/language-site && ng build --prod"
 central:
 	echo "Compressing files for upload"
 	tar --exclude='./src/language-site/node_modules' --exclude='./src/language-site/dist' -cf $(CODE_TAR) ./src ./package.json
@@ -58,27 +58,27 @@ central:
 	$(C_SSH) npm install
 	echo "Installing angular dependencies"
 	$(C_SSH) "cd src/language-site && npm install"
-	# echo "Building angular app"
-	# $(C_SSH) "cd src/language-site && ng build --prod"
+	echo "Building angular app"
+	$(C_SSH) "cd src/language-site && ng build --prod"
 
 
 install_dependecies_west:
 	$(W_SSH) sudo apt-get install -y npm
-	$(W_SSH) sudo snap install node --classic --channel=14
+	$(W_SSH) sudo snap install node --classic --channel=14 
 	$(W_SSH) sudo npm install -g n
 	$(W_SSH) sudo n stable
-	$(W_SSH) sudo npm install -g @angular/cli
+	$(W_SSH) sudo npm install -g @angular/cli 
 
 install_dependecies_east:
 	$(E_SSH) sudo apt-get install -y npm
-	$(E_SSH) sudo snap install node --classic --channel=14
+	$(E_SSH) sudo snap install node --classic --channel=14 
 	$(E_SSH) sudo npm install -g n
 	$(E_SSH) sudo n stable
-	$(E_SSH) sudo npm install -g @angular/cli
+	$(E_SSH) sudo npm install -g @angular/cli 
 
 install_dependecies_central:
 	$(C_SSH) sudo apt-get install -y npm
 	$(C_SSH) sudo snap install node --classic --channel=14
 	$(C_SSH) sudo npm install -g n
 	$(C_SSH) sudo n stable
-	$(C_SSH) sudo npm install -g @angular/cli
+	$(C_SSH) sudo npm install -g @angular/cli 

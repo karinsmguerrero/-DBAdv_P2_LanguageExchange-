@@ -1,0 +1,791 @@
+////////////////////////-Server-//////////////////////////////////////
+------------------------user.js--------------------------------------
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const User = Schema({
+    user: String,
+    password: String,
+    name: String,
+    lastname1: String,
+    lastname2: String,
+    age: Number,
+    sex: String,
+    country: String,
+    lang_desired: [{ name : String, level : String}],
+    lang_teach:[{ name : String, level : String}],
+    hobbies: [{ name : String}],
+    contact:[{ name : String, value : String}]
+
+});
+
+//First parameter corresponds to collection
+module.exports = mongoose.model('Model', User, 'users');
+
+--------------------------routes.js---------------------------------
+module.exports = app => {
+
+    const user = require("../controllers/user.controller.js");
+
+    //---- User ------
+    // Handles credential checking
+    app.post("/api/login", user.checkLogin);
+    //Handles user registration
+    app.post("/api/register", user.register);
+    // Handle user information
+    app.post("/api/userinfo", user.getUserInfo);
+    // Handles hobby adding
+    app.put("/api/addHobby", user.addHobby);
+    // Handles hobby deletion
+    app.delete("/api/deleteHobby", user.deleteHobby);
+    // Handles contact info adding
+    app.put("/api/addContact", user.addContact);
+    // Handles contact deletion
+    app.delete("/api/deleteContact", user.deleteContact);
+    //Retrieves all users by language desired - Report 1
+    app.post("/api/reports/1", user.getUsersByLangDesiredToTeach);
+    //Retrieves all users by language desired who teach a desired language - Report 2
+    app.post("/api/reports/2", user.getUsersByLangDesiredAndTeach);
+    //Retrieves all users by language desired who teach a desired language - Report 3
+    app.post("/api/reports/3", user.getUsersByLangDesiredAndTeachAndCountry);
+     //Retrieves all users by language desired who teach a desired language - Report 4
+     app.post("/api/reports/4", user.getUsersByLangDesiredAndTeachAndAge);
+    //Retrieves all users - Report 5
+    app.get("/api/reports/5", user.getUsers);
+    //Retrieves all users - Report 6
+    app.get("/api/reports/6", user.getUsersByCountry);
+    //Retrieves all users - Report 7
+    app.get("/api/reports/7", user.getUsersByLangTeach);
+    //Retrieves all users - Report 8
+    app.get("/api/reports/8", user.getUsersByLangDesired);
+};
+
+--------------------------------- server.js-----------------------------------------
+const express = require('express');
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+
+const app = express();
+
+//Middleware
+var corsOptions = {
+  origin: "http://localhost:4200"
+};
+
+app.use(cors(corsOptions));
+
+// parse requests of content-type: application/json
+app.use(bodyParser.json());
+
+// parse requests of content-type: application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(express.static(__dirname + '/language-site/dist/language-site'))
+
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + '/language-site/dist/language-site/index.html');
+});
+//Database connection
+const uri = "mongodb+srv://test:test123@tec.jlazn.mongodb.net/Proyecto2?retryWrites=true&w=majority";
+//const uri = "mongodb://langexchange.centralus.cloudapp.azure.com:27017,langexchange.eastus.cloudapp.azure.com:27017,langexchange.westus.cloudapp.azure.com:27017/?replicaSet=rsLangEx&retryWrites=true&readPreference=nearest&w=majority";
+
+// connection to db
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(db => console.log('db connected'))
+  .catch(err => console.log(err));
+
+//Routing  
+require("./routes/routes.js")(app);
+
+// set port, listen for requests
+app.listen(3000, () => {
+  console.log("Server is running on port 3000.");
+});
+
+
+------------------------user.controller.js--------------------------------------
+// Get all the clients from the DB
+var user = require("../models/user.js");
+
+module.exports.checkCredentials = async (req, res) => {
+    const rs = await user.aggregate([
+        {
+            $project:
+            {
+                _id: 0,
+                result: { $and: [{ $eq: ["$user", req.body.user] }, { $eq: ["$password", req.body.password] }] }
+            }
+        },
+        {
+            $match: {
+                result: true
+            }
+        }
+
+    ]);
+    if (rs.length == 0)
+        res.send({ result: 2 });
+    else
+        res.send({ result: 1 });
+    return;
+};
+
+module.exports.checkLogin = async (req, res) => {
+    console.log("checking");
+    const rs = await user.find({ user: req.body.user, password: req.body.password });
+    if (rs.length == 0)
+        res.send([{ result: 2 }]);
+    else {
+        //res.send( rs);
+        console.log(rs);
+        res.send(rs);
+    }
+    return;
+};
+
+module.exports.getUserInfo = async (req, res) => {
+    console.log("checking");
+    const rs = await user.find({ user: req.body.user });
+    if (rs.length == 0)
+        res.send([{ result: 2 }]);
+    else {
+        //res.send( rs);
+        console.log(rs);
+        res.send(rs);
+    }
+    return;
+};
+
+module.exports.register = async (req, res) => {
+    var ans;
+    console.log(req.body);
+    await user.find({ user: { $exists: true, $eq: req.body.user } }, { _id: 0, user: 1 }, function (err, result) {
+        console.log(ans);
+        if (err) {
+            ans = err;
+        } else {
+            ans = result;
+        }
+    });
+    if (ans != undefined && ans.length == 0) {
+        console.log(req.body);
+        await user.create(req.body);
+        res.send({ result: 1 });
+        return;
+    }
+    else {
+        res.send({ result: 2 });
+        return;
+    }
+};
+
+module.exports.addHobby = async (req, res) => {
+    const ans = await user.updateOne(
+        { user: req.body.user },
+        { $push: { hobbies: { name: req.body.name } } }
+    )
+    if (ans.nModified >= 1) {
+        res.send({ result: 1 });
+    }
+    else {
+        res.send({ result: 2 });
+    }
+}
+
+module.exports.deleteHobby = async (req, res) => {
+    const ans = await user.updateMany({ user: req.body.user }, {
+        $pull: {
+            hobbies: {
+                name: req.body.name
+            }
+        }
+    }, { multi: true })
+    if (ans.nModified >= 1) {
+        res.send({ result: 1 });
+    }
+    else {
+        res.send({ result: 2 });
+    }
+}
+
+
+module.exports.addContact = async (req, res) => {
+    const ans = await user.updateOne(
+        { user: req.body.user },
+        { $push: { contact: { name: req.body.name } } }
+    )
+    if (ans.nModified >= 1) {
+        res.send({ result: 1 });
+    }
+    else {
+        res.send({ result: 2 });
+    }
+}
+
+module.exports.deleteContact = async (req, res) => {
+    const ans = await user.updateMany({ user: req.body.user }, {
+        $pull: {
+            contact: {
+                name: req.body.name
+            }
+        }
+    }, { multi: true })
+    if (ans.nModified >= 1) {
+        res.send({ result: 1 });
+    }
+    else {
+        res.send({ result: 2 });
+    }
+}
+
+
+module.exports.getUsersByLangDesiredToTeach = async (req, res) => {
+    const lang_desired = req.body.lang_desired;
+
+    var desired = [];
+    //Extracts names of languages
+    lang_desired.forEach(lang => {
+        desired.push(lang.name);
+    });
+
+    await user.find({ "lang_desired.name": { $in: desired } }, function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(result);
+        }
+    });
+    return;
+};
+
+module.exports.getUsersByLangDesiredAndTeach = async (req, res) => {
+    const lang_desired = req.body.lang_desired;
+    const lang_Teach = req.body.lang_teach;
+
+    var desired = [];
+    lang_desired.forEach(lang => {
+        desired.push(lang.name);
+    });
+
+    var teach = [];
+    lang_Teach.forEach(lang => {
+        teach.push(lang.name);
+    });
+
+    await user.find({
+        $and: [{ "lang_desired.name": { $in: desired } },
+        { "lang_teach.name": { $in: teach } }]
+    }, function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(result);
+        }
+    });
+    return;
+};
+
+module.exports.getUsersByLangDesiredAndTeachAndCountry = async (req, res) => {
+    const lang_desired = req.body.lang_desired;
+    const lang_Teach = req.body.lang_teach;
+    const countries = req.body.countries;
+
+    var desired = [];
+    lang_desired.forEach(lang => {
+        desired.push(lang.name);
+    });
+
+    var teach = [];
+    lang_Teach.forEach(lang => {
+        teach.push(lang.name);
+    });
+
+    var country = [];
+    countries.forEach(con => {
+        country.push(con.name);
+    });
+
+    console.log(teach);
+
+    await user.find({
+        $and: [{ "lang_desired.name": { $in: desired } },
+        { "lang_teach.name": { $in: teach } }, { country: { $in: country } }]
+    }, function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(result);
+        }
+    });
+    return;
+};
+
+module.exports.getUsersByLangDesiredAndTeachAndAge = async (req, res) => {
+    const lang_desired = req.body.lang_desired;
+    const lang_Teach = req.body.lang_teach;
+    const countries = req.body.countries;
+    const age = req.body.age;
+
+    var desired = [];
+    lang_desired.forEach(lang => {
+        desired.push(lang.name);
+    });
+
+    var teach = [];
+    lang_Teach.forEach(lang => {
+        teach.push(lang.name);
+    });
+
+    var country = [];
+    countries.forEach(con => {
+        country.push(con.name);
+    });
+
+    console.log(teach);
+
+    await user.find({
+        $and: [{ "lang_desired.name": { $in: desired } },
+        { "lang_teach.name": { $in: teach } }, { country: { $in: country } }, { age: { $gte: age[0] } }, { age: { $lte: age[1] } }]
+    }, function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(result);
+        }
+    });
+    return;
+};
+
+module.exports.getUsers = async (req, res) => {
+    await user.find({}, { name: 1, lastname1: 1, lastname2: 1, country: 1, lang_desired: 1 }, function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(result);
+        }
+    });
+    return;
+};
+
+module.exports.getUsersByCountry = async (req, res) => {
+    await user.aggregate([{ $group: { _id: "$country", total: { $sum: 1 } } }], function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(result);
+        }
+    });
+    return;
+};
+
+module.exports.getUsersByLangTeach = async (req, res) => {
+    await user.aggregate([{ $project: { _id: 0, lang_teach: 1 } },
+    { $unwind: "$lang_teach" },
+    { $group: { _id: "$lang_teach.name", total: { $sum: 1 } } }], function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(result);
+        }
+    });
+    return;
+};
+
+module.exports.getUsersByLangDesired = async (req, res) => {
+    await user.aggregate([{ $project: { _id: 0, lang_desired: 1 } },
+    { $unwind: "$lang_desired" },
+    { $group: { _id: "$lang_desired.name", total: { $sum: 1 } } }], function (err, result) {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(result);
+        }
+    });
+    return;
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+import { Injectable } from '@angular/core';
+import { ReportCountries } from 'src/app/Models/report-countries.model';
+import { ReportLearn } from 'src/app/Models/report-learn.model';
+import { ReportTeach } from 'src/app/Models/report-teach.model';
+import { Person } from 'src/app/Models/person.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
+import { ReportLangAge } from 'src/app/Models/report-lang-age.model';
+import { Hobbies } from 'src/app/Models/hobbies.model';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Contacts } from 'src/app/Models/contacts.model';
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ReportsService {
+  countriesReport: ReportCountries[] = [];
+  personReport: Person[] = [];
+  learnReport: ReportLearn[] = [];
+  teachReport: ReportTeach[] = [];
+  userReport: Person[] = [];
+  consult34: ReportLangAge[] = [];
+  userSession: Person;
+
+
+  constructor(public http: HttpClient, private toastr: ToastrService, private route: ActivatedRoute,
+    private router: Router) { }
+
+  async getUsersReport() {
+    await this.http.get(environment.API + '/reports/5').toPromise().then(res => {
+      this.personReport = res as Person[];
+    }, error => {
+      this.toastr.error('No se pudieron cargar los usuarios', 'Error!');
+      console.log(error);
+    });
+    console.log(this.personReport);
+    return this.personReport;
+  }
+
+  async getCountriesReport() {
+    await this.http.get(environment.API + '/reports/6').toPromise().then(res => {
+      this.countriesReport = res as ReportCountries[];
+    }, error => {
+      this.toastr.error('No se pudieron cargar la cantidad de usuarios', 'Error!');
+      console.log(error);
+    });
+    console.log(this.countriesReport);
+    return this.countriesReport;
+  }
+
+  async getTeachReport() {
+    await this.http.get(environment.API + '/reports/7').toPromise().then(res => {
+      this.teachReport = res as ReportTeach[];
+    }, error => {
+      this.toastr.error('No se pudieron cargar la cantidad de usuarios', 'Error!');
+      console.log(error);
+    });
+    console.log(this.teachReport);
+    return this.teachReport;
+  }
+
+  async getLearnReport() {
+    await this.http.get(environment.API + '/reports/8').toPromise().then(res => {
+      this.learnReport = res as ReportLearn[];
+    }, error => {
+      this.toastr.error('No se pudieron cargar la cantidad de usuarios', 'Error!');
+      console.log(error);
+    });
+    console.log(this.learnReport);
+    return this.learnReport;
+  }
+
+  async getUserInfo(name: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+    const body = {
+      "user": name
+    }
+    await this.http.post(environment.API + '/userinfo', body, httpOptions).toPromise().then(res => {
+      console.log(res);
+      this.userSession = res as Person;
+
+    }, error => {
+      this.toastr.error('No existen usuarios con estas caracteristicas', 'Error!');
+      console.log(error);
+    });
+    console.log(this.userSession);
+    return this.userSession as Person;
+  }
+
+
+  async getLangTeach(person: Person) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+    const body = {
+      "user": person.user,
+      "password": person.password,
+      "name": person.name,
+      "lastname1": person.lastname1,
+      "lastname2": person.lastname2,
+      "age": person.age,
+      "sex": person.sex,
+      "country": person.country,
+      "lang_desired": person.lang_teach,
+      "lang_teach": person.lang_teach,
+      "hobbies": person.hobbies,
+      "contact": person.contact
+    }
+    console.log(person.lang_teach);
+    console.log(body.lang_desired);
+    await this.http.post(environment.API + '/reports/1', body, httpOptions).toPromise().then(res => {
+      console.log(res);
+      this.userReport = res as Person[];
+    }, error => {
+      this.toastr.error('No existen usuarios con estas caracteristicas', 'Error!');
+      console.log(error);
+    });
+    return this.userReport;
+  }
+
+  async getLangDesiredTeach(person: Person) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+    const body = {
+      "user": person.user,
+      "password": person.password,
+      "name": person.name,
+      "lastname1": person.lastname1,
+      "lastname2": person.lastname2,
+      "age": person.age,
+      "sex": person.sex,
+      "country": person.country,
+      "lang_desired": person.lang_teach,
+      "lang_teach": person.lang_desired,
+      "hobbies": person.hobbies,
+      "contact": person.contact
+    }
+    await this.http.post(environment.API + '/reports/2', body, httpOptions).toPromise().then(res => {
+      console.log(res);
+      this.userReport = res as Person[];
+    }, error => {
+      this.toastr.error('No existen usuarios con estas caracteristicas', 'Error!');
+      console.log(error);
+    });
+    return this.userReport;
+  }
+  async getLangDesiredTeachCounntry(person: ReportLangAge) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+    const body = {
+      countries: person.countries,
+      lang_desired: person.lang_teach,
+      lang_teach: person.lang_desired
+    }
+    await this.http.post(environment.API + '/reports/3', body, httpOptions).toPromise().then(res => {
+      console.log(res);
+      this.userReport = res as Person[];
+      console.log(this.userReport);
+    }, error => {
+      this.toastr.error('No existen usuarios con estas caracteristicas', 'Error!');
+      console.log(error);
+    });
+    return this.userReport;
+  }
+
+  async getLangDesiredTeachAge(person: ReportLangAge) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+    const body = {
+      countries: person.countries,
+      lang_desired: person.lang_teach,
+      lang_teach: person.lang_desired,
+      age: person.age
+    }
+    await this.http.post(environment.API + '/reports/4', body, httpOptions).toPromise().then(res => {
+      console.log(res);
+      this.userReport = res as Person[];
+      console.log(this.userReport);
+    }, error => {
+      this.toastr.error('No existen usuarios con estas caracteristicas', 'Error!');
+      console.log(error);
+    });
+    return this.userReport;
+  }
+
+  async addHobby(person: Hobbies) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+    const body = {
+      user: person.user,
+      name: person.name
+    }
+    console.log(body.name);
+    await this.http.put(environment.API + '/addHobby', body, httpOptions).toPromise().then(res => {
+      console.log(res);
+    }, error => {
+      this.toastr.error('No se pudo anadir el hobby', 'Error');
+      console.log(error);
+    });
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+  }
+
+  async deleteHobby(person: Hobbies) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      body: {
+        user: person.user,
+        name: person.name
+      }
+    }
+    await this.http.request('delete', environment.API + '/deleteHobby', httpOptions).toPromise().then(res => {
+      console.log(res);
+    }, error => {
+      this.toastr.error('No se pudo anadir el hobby', 'Error');
+      console.log(error);
+    });
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+  }
+
+  async addContact(person: Contacts) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+    const body = {
+      user: person.user,
+      name: person.name,
+      value: person.value
+    }
+    console.log(body.name);
+    await this.http.put(environment.API + '/addContact', body, httpOptions).toPromise().then(res => {
+      console.log(res);
+    }, error => {
+      this.toastr.error('No se pudo anadir el contacto', 'Error');
+      console.log(error);
+    });
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+  }
+
+  async deleteContact(person: Contacts) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      body: {
+        user: person.user,
+        name: person.name
+      }
+    }
+    await this.http.request('delete', environment.API + '/deleteContact', httpOptions).toPromise().then(res => {
+      console.log(res);
+    }, error => {
+      this.toastr.error('No se pudo anadir el contacto', 'Error');
+      console.log(error);
+    });
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+  }
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { User } from '../Models/user.model';
+import { environment } from 'src/environments/environment';
+import { Country } from '../Models/country';
+import { Person } from '../Models/person.model';
+import { Router, ActivatedRoute } from '@angular/router';
+import { isParameter } from 'typescript';
+//import { ConsoleReporter } from 'jasmine';
+//port { Console } from 'console';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LoginService {
+  user: User[] = [];
+  countries: Country[] = [];
+
+  constructor(public http: HttpClient, 
+              private toastr: ToastrService,
+              private route: ActivatedRoute,
+              private router: Router,) { }
+
+  async login(user: User) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+    const body = {
+      user: user.user,
+      password: user.password
+    }
+    await this.http.post(environment.API + '/login', body, httpOptions).toPromise().then(res =>{
+      console.log(res);
+      if(res[0].result==2){
+        this.toastr.error('El usuario o la contraseña es incorrecto', 'Error');
+      }
+      else{
+        console.log('yes');
+        if(localStorage.length > 0){
+          localStorage.clear();
+        }
+        console.log(res[0].name);
+        console.log(res[0].sex);
+        localStorage.setItem('user',JSON.stringify(res));
+        this.router.navigate(['/profile'],{relativeTo:this.route});
+        
+      }
+    }, error => {
+      this.toastr.error('No se pudo iniciar sesion', 'Error');
+      console.log(error);
+    });
+    
+      
+  }
+  async getCountries() {
+    await this.http.get('https://restcountries.eu/rest/v2/all?fields=name').toPromise().then(res => {
+      this.countries = res as Country[];
+    }, error => {
+      this.toastr.error('No se pudieron cargar los paises', 'Error!');
+      console.log(error);
+    });
+    return this.countries;
+  }
+
+  async getUsers() {
+    await this.http.get(environment.API + '/users').toPromise().then(res => {
+      this.user = res as User[];
+      console.log(res);
+    }, error => {
+      this.toastr.error('No se pudieron cargar los usuarios', 'Error!');
+      console.log(error);
+    });
+    console.log(this.user);
+    return this.user;
+  }
+
+  async registerUser(person: Person) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    }
+    const body = {
+      "user": person.user,
+      "password": person.password,
+      "name": person.name,
+      "lastname1": person.lastname1,
+      "lastname2": person.lastname2,
+      "age": person.age,
+      "sex": person.sex,
+      "country": person.country,
+      "lang_desired": person.lang_desired,
+      "lang_teach":person.lang_teach,
+      "hobbies": person.hobbies,
+      "contact": person.contact
+    }
+    console.log(body);
+    await this.http.post(environment.API + '/register',body,httpOptions ).toPromise().then(res => {
+      console.log(res);
+    })
+  }
+
+}
+
+  
+
+  

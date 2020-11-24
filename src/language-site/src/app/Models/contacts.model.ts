@@ -1,4 +1,5 @@
 export class Contacts {
     user: string;
-    name: string
+    name: string;
+    value: string;
 }
