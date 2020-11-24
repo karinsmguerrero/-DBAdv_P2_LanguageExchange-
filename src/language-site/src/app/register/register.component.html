@@ -1,119 +1,153 @@
 ﻿<div class=" d-flex justify-content-center">
-    <h4 class="card-header">Register</h4>
-    <div class="card-body">
-        <form [formGroup]="form" (ngSubmit)="registerUser()">
-            <div class="form-group">
-                <label for="firstName">Nombre</label>
-                <input type="text" formControlName="name" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label for="lastName">Primer Apellido</label>
-                <input type="text" formControlName="lastname1" class="form-control" />              
-            </div>
-            <div class="form-group">
-                <label for="username">Segundo Apellido</label>
-                <input type="text" formControlName="lastname2" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label for="password">Sexo</label>
-                <div>
-                <select formControlName="sex">
-                    <option *ngFor="let r of sexo" [value]="r">
-                                 {{r}}
-                    </option>
-                 </select>
-                 </div>
-            </div>
-            <div class="form-group">
-                <label for="password">Edad</label>
-                <input type="text" formControlName="age" class="form-control"/>
-            </div>
-            <div class="form-group">
-                <label for="password">Pais</label>
-                <div>
-                <select formControlName="country">
-                    <option *ngFor="let r of countries" [value]="r.name">
-                                 {{r.name}}
-                    </option>
-                 </select>
-                 </div>
-            </div>
-            
-            <div formArrayName="lang_desired">
-                <div *ngFor="let subtask of subtaskControl().controls; let i=index">
-                    <div [formGroupName]="i">
-                        <label for="password">Lenguajes deseados</label>
-                        <input type="text" formControlName="name" class="form-control"/>
-                        <label for="password">Nivel de Conocimiento</label>
-                        <select formControlName="level">
-                            <option *ngFor="let r of levels" [value]="r">
+    <aside class="col-lg" style="margin: 5% 30% 5% 30%;">
+        <div class="card">
+            <h4 class="card-header login">Register</h4>
+            <div class="line"></div>
+            <div class="card-body">
+                <form [formGroup]="form" (ngSubmit)="registerUser()">
+                    <div class="form-group">
+                        <label for="firstName">Nombre</label>
+                        <input type="text" formControlName="name" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-lg-6">
+                                <label for="lastName">Primer Apellido</label>
+                                <input type="text" formControlName="lastname1" class="form-control" />
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="username">Segundo Apellido</label>
+                                <input type="text" formControlName="lastname2" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-lg-6">
+                                <label for="password">Sexo</label>
+                                <div>
+                                    <select formControlName="sex" class="form-control">
+                                        <option *ngFor="let r of sexo" [value]="r">
+                                            {{r}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="password">Edad</label>
+                                <input type="text" formControlName="age" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Pais</label>
+                        <div>
+                            <select formControlName="country" class="form-control">
+                                <option *ngFor="let r of countries" [value]="r.name">
+                                    {{r.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div formArrayName="lang_desired">
+                        <div *ngFor="let subtask of subtaskControl().controls; let i=index">
+                            <div [formGroupName]="i">
+                                <label for="password">Lenguajes deseados</label>
+                                <select formControlName="name" class="form-control">
+                                    <option *ngFor="let r of languages" [value]="r">
                                         {{r}}
-                            </option>
-                        </select>
-                    </div>
-                    <div>
-                        <a class="btn  btn-sm" (click)="addLink()">Add</a>
-                        <a class="btn  btn-sm" (click)="removeLink(i)">REMOVE</a>
-                    </div>
-                </div>
-            </div>
-       
-            <div formArrayName="lang_teach">
-                <div *ngFor="let subtask of subtaskControl2().controls; let i=index">
-                    <div [formGroupName]="i">
-                        <label for="password">Lenguajes aprendidos</label>
-                        <input type="text" formControlName="name" class="form-control"/>
-                        <label for="password">Nivel de Conocimiento</label>
-                        <select formControlName="level">
-                            <option *ngFor="let r of levels" [value]="r">
+                                    </option>
+                                </select>
+                                <label for="password">Nivel de Conocimiento</label>
+                                <select formControlName="level" class="form-control">
+                                    <option *ngFor="let r of levels" [value]="r">
                                         {{r}}
-                            </option>
-                        </select>
+                                    </option>
+                                </select>
+                            </div>
+                            <div>
+                                <a class="btn  btn-sm" (click)="addLink()">Añadir</a>
+                                <a class="btn  btn-sm" (click)="removeLink(i)">Eliminar</a>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <a class="btn  btn-sm" (click)="addLink2()">Add</a>
-                        <a class="btn  btn-sm" (click)="removeLink2(i)">REMOVE</a>
+
+                    <div formArrayName="lang_teach">
+                        <div *ngFor="let subtask of subtaskControl2().controls; let i=index">
+                            <div [formGroupName]="i">
+                                <label for="password">Lenguajes aprendidos</label>
+                                <select formControlName="name" class="form-control">
+                                    <option *ngFor="let r of languages" [value]="r">
+                                        {{r}}
+                                    </option>
+                                </select>
+                                <label for="password">Nivel de Conocimiento</label>
+                                <select formControlName="level" class="form-control">
+                                    <option *ngFor="let r of levels" [value]="r">
+                                        {{r}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div>
+                                <a class="btn  btn-sm" (click)="addLink2()">Añadir</a>
+                                <a class="btn  btn-sm" (click)="removeLink2(i)">Eliminar</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div formArrayName="hobbies">
-                <div *ngFor="let subtask of subtaskControl3().controls; let i=index">
-                    <div [formGroupName]="i">
-                        <label for="password">Hobby</label>
-                        <input type="text" formControlName="name" class="form-control"/>
+                    <div formArrayName="hobbies">
+                        <div *ngFor="let subtask of subtaskControl3().controls; let i=index">
+                            <div [formGroupName]="i">
+                                <label for="password">Hobby</label>
+                                <input type="text" formControlName="name" class="form-control" />
+                            </div>
+                            <div>
+                                <a class="btn  btn-sm" (click)="addLink3()">Añadir</a>
+                                <a class="btn  btn-sm" (click)="removeLink3(i)">Eliminar</a>
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <a class="btn  btn-sm" (click)="addLink3()">ADD</a>
-                        <a class="btn  btn-sm" (click)="removeLink3(i)">REMOVE</a>
+                    <div formArrayName="contact">
+                        <div *ngFor="let subtask of subtaskControl4().controls; let i=index">
+                            <div [formGroupName]="i">
+                                <label for="password">Contacto</label>
+                                <div>
+                                    <select formControlName="name" class="form-control">
+                                        <option *ngFor="let r of contacts" [value]="r">
+                                            {{r}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <input type="text" formControlName="value" class="form-control" />
+                                </div>
+                            </div>
+                            <div>
+                                <a class="btn  btn-sm" (click)="addLink4()">Añadir</a>
+                                <a class="btn  btn-sm" (click)="removeLink4(i)">Eliminar</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div formArrayName="contact">
-                <div *ngFor="let subtask of subtaskControl4().controls; let i=index">
-                    <div [formGroupName]="i">
-                        <label for="password">Contacto</label>
-                        <input type="text" formControlName="name" class="form-control"/>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-lg-6">
+                                <label for="firstName">Usuario</label>
+                                <input type="text" formControlName="user" class="form-control" />
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="firstName">Contraseña</label>
+                                <input type="password" formControlName="password" class="form-control" />
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <a class="btn  btn-sm" (click)="addLink4()">Add</a>
-                        <a class="btn  btn-sm" (click)="removeLink4(i)">REMOVE</a>
+                    <div class="form-group">
+                        <button class="btn btn-primary">
+                            Registrarse
+                        </button>
+                        <a routerLink="/login" class="btn btn-link">Cancelar</a>
                     </div>
-                </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="firstName">Username</label>
-                <input type="text" formControlName="user" class="form-control"/>
-            </div>
-            <div class="form-group">
-                <label for="firstName">Password</label>
-                <input type="password" formControlName="password" class="form-control"/>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-primary">
-                    Registrarse
-                </button>
-                <a routerLink="/login2" class="btn btn-link">Cancelar</a>
-            </div>
-        </form>
-    </div>
+        </div>
+    </aside>
 </div>

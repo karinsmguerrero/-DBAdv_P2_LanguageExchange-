@@ -6,6 +6,9 @@ import { environment } from 'src/environments/environment';
 import { Country } from '../Models/country';
 import { Person } from '../Models/person.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import { isParameter } from 'typescript';
+//import { ConsoleReporter } from 'jasmine';
+//port { Console } from 'console';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +16,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class LoginService {
   user: User[] = [];
   countries: Country[] = [];
+
   constructor(public http: HttpClient, 
               private toastr: ToastrService,
               private route: ActivatedRoute,
@@ -29,7 +33,7 @@ export class LoginService {
     await this.http.post(environment.API + '/login', body, httpOptions).toPromise().then(res =>{
       console.log(res);
       if(res[0].result==2){
-        console.log('nope')
+        this.toastr.error('El usuario o la contraseña es incorrecto', 'Error');
       }
       else{
         console.log('yes');
@@ -51,13 +55,11 @@ export class LoginService {
   }
   async getCountries() {
     await this.http.get('https://restcountries.eu/rest/v2/all?fields=name').toPromise().then(res => {
-      console.log(res);
       this.countries = res as Country[];
     }, error => {
       this.toastr.error('No se pudieron cargar los paises', 'Error!');
       console.log(error);
     });
-    console.log(this.countries);
     return this.countries;
   }
 

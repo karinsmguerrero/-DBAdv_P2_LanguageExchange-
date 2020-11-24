@@ -41,7 +41,10 @@ export class LoginComponent implements OnInit {
   }
   
   login(){
-    this.reportL.login(this.form.value);
+    if(this.form.value.user != "" && this.form.value.password != "")
+      this.reportL.login(this.form.value);
+    else
+      this.toastr.error('Ingrese usuario y contraseña', 'Error');
   }
   
 

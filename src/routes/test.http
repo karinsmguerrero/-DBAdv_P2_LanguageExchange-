@@ -176,11 +176,11 @@ content-type: application/json
 {    
    "lang_desired":[
       {
-         "name": "Alemán",
+         "name": "Francés",
          "level" : "Principiante"
       },
        {
-         "name": "Inglés",
+         "name": "Portugués",
          "level" : "Intermedio"
       }
    ]

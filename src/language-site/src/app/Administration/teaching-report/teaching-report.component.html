@@ -8,20 +8,20 @@
                     <table class="table table-hover bike-table">
                         <thead>
                             <tr class="d-flex">   
-                                <th class="col-3">Idioma</th>
-                                <th class="col-3">Cantidad de usuarios</th>
+                                <th class="col-6">Idioma</th>
+                                <th class="col-6">Cantidad de usuarios</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr class="d-flex" *ngFor="let report of teachReports"> 
-                                <td class="col-3">{{report._id}}</td>
-                                <td class="col-3">{{report.total}}</td>                               
+                                <td class="col-6">{{report._id}}</td>
+                                <td class="col-6">{{report.total}}</td>                               
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <div class="col-lg 3"></div>
+        <div class="col-lg-3"></div>
     </div>
 </article>

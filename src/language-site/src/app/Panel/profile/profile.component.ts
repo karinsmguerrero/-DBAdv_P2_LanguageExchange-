@@ -9,7 +9,20 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class ProfileComponent implements OnInit {
 
-  user: Person;
+  user: Person = {
+    user: "",
+    password: "",
+    name: "",
+    lastname1: "",
+    lastname2: "",
+    age: 0,
+    sex: "",
+    country: "",
+    lang_desired: null,
+    lang_teach: null,
+    hobbies: null,
+    contact: null
+  };
   active = 1;
   constructor(
     private route: ActivatedRoute,

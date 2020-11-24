@@ -13,7 +13,6 @@ import { from } from 'rxjs';
 import { Country } from "src/app/Models/country";
 import { LoginService } from "src/app/Services/login.service";
 import { report } from 'process';
-import { ToastrService } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { UsersReportComponent } from './Administration/users-report/users-report.component';
@@ -25,7 +24,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ProfileComponent } from './Panel/profile/profile.component';
-import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { PersonTeachComponent } from './Panel/person-teach/person-teach.component';
 import { PersonTeachDesiredComponent } from './Panel/person-teach-desired/person-teach-desired.component';
 import { PersonTeachDesiredCountryComponent } from './Panel/person-teach-desired-country/person-teach-desired-country.component';
@@ -33,6 +32,7 @@ import { PersonTeachDesiredAgeComponent } from './Panel/person-teach-desired-age
 import { HobbyConfigComponent } from './Panel/hobby-config/hobby-config.component';
 import { ContactConfigComponent } from './Panel/contact-config/contact-config.component';
 import { NavigationComponent } from './Extra/navigation/navigation.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -53,7 +53,7 @@ import { NavigationComponent } from './Extra/navigation/navigation.component';
     HobbyConfigComponent,
     ContactConfigComponent,
     NavigationComponent
-    
+
   ],
   imports: [
     BrowserModule,
@@ -63,9 +63,9 @@ import { NavigationComponent } from './Extra/navigation/navigation.component';
     NgbModule,
     ReactiveFormsModule,
     FormsModule,
-    AutocompleteLibModule
-    
-
+    AutocompleteLibModule,
+    ToastrModule.forRoot(), // ToastrModule added
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
