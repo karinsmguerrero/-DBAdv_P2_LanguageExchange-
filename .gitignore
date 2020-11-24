@@ -8,6 +8,7 @@
 # dependencies
 node_modules
 
+*.tar.gz
 
 # IDE - VSCode
 .vscode/*
